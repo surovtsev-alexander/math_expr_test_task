@@ -5,8 +5,11 @@
 
 enum ret_code_e
 {
-  RET_CODE_OK            = 0,
-  RET_CODE_UNKNOWN_ERROR = 1,
+  RET_CODE_OK   = 0,
+  RET_CODE_EOF,
+  RET_CODE_EOL,
+
+  RET_CODES
 };
 
 typedef int32_t ret_code_t;
