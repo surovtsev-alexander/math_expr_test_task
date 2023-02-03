@@ -1,13 +1,9 @@
-#include "stdio.h"
-
+#include "math_expr_calculator.h"
 
 int main()
 {
-  puts("staring");
+  ret_code_t ret_code = math_expr_calculator_read_and_print_result();
 
-
-  puts("finishing");
-
-  return 0;
+  return ret_code;
 }
 
