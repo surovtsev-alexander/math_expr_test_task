@@ -36,7 +36,7 @@ static ret_code_t read_next_line_and_print_result(
   token_id_t    token_id;
   ret_code_t    ret_code = RET_CODE_OK;
 
-  while (RET_CODE_OK == ret_code)
+  for (;;)
   {
     stream_tokenizer_next_token(input_stream, &token);
 
