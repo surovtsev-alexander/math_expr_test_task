@@ -54,13 +54,59 @@ static ret_code_t delete_tree(void)
 {
   custom_queue_t tmp_queue = TAILQ_HEAD_INITIALIZER(tmp_queue);
 
+  ret_code_t ret = RET_CODE_OK;
+  const custom_queue_entry_t *entry = peek_entry(
+      queue, first_not_last);
+  node_t *node;
+
+  custom_queue_empty(&tmp_queue);
+
   if (NULL == tree_head)
   {
     return RET_CODE_OK;
   }
 
+  custom_queue_insert(
+      &tmp_queue,
+      tree_head,
+      sizeof(node_t),
+      LAST_OR_TAIL);
+  delete(tree_head);
 
-  return RET_CODE_OK;
+  while (!custom_queue_is_empty(&tmp_queue))
+  {
+    node = custom_queue_peek(&tmp_queue, HEAD_OR_FIRST);
+
+    if (node->left)
+    {
+      ret_code = custom_queue_insert(
+          &tmp_queue,
+          node->left,
+          sizeof(node_t),
+          LAST_OR_TAIL);
+    }
+
+    if (RET_CODE_OK != ret_code)
+    {
+      break;
+    }
+
+    if (node->right)
+    {
+      ret_code = custom_queue_insert(
+          &tmp_queue,
+          node->right,
+          sizeof(node_t),
+          LAST_OR_TAIL);
+    }
+
+    if (RET_CODE_OK != ret_code)
+    {
+      break;
+    }
+  }
+
+  return ret_code;
 }
 
 
