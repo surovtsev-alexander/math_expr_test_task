@@ -14,8 +14,15 @@ static int get_token_id_first_position(
     const custom_queue_t *queue,
     token_id_t token_id);
 
+static const token_t equal_sign_token =
+{
+  .token_id = TOKEN_ID_EQUAL,
+};
+
+
 static bool  _result_is_defined = false;
 static float _result;
+
 
 ret_code_t abstract_syntax_tree_init(void)
 {
@@ -86,11 +93,6 @@ static ast_node_t* create_node_by_range(
 
   return res;
 }
-
-static const token_t equal_sign_token =
-{
-  .token_id = TOKEN_ID_EQUAL,
-};
 
 ret_code_t abstract_syntax_tree_create(const custom_queue_t *queue)
 {
