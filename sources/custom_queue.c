@@ -37,12 +37,6 @@ void custom_queue_empty(
   custom_queue_init(queue);
 }
 
-bool custom_queue_is_empty(
-    const custom_queue_t *queue)
-{
-  return NULL == queue || TAILQ_EMPTY(queue);
-}
-
 ret_code_t custom_queue_insert(
     custom_queue_t *queue,
     const void     *data,
@@ -85,7 +79,7 @@ static const custom_queue_entry_t * peek_entry(
     custom_queue_t *queue,
     bool            first_not_last)
 {
-  if (custom_queue_is_empty(queue))
+  if (TAILQ_EMPTY(queue))
   {
     return NULL;
   }

@@ -52,12 +52,11 @@ ret_code_t abstract_syntax_tree_evaluate_x(float *result)
 
 static ret_code_t delete_tree(void)
 {
+  /*
   custom_queue_t tmp_queue = TAILQ_HEAD_INITIALIZER(tmp_queue);
 
   ret_code_t ret = RET_CODE_OK;
-  const custom_queue_entry_t *entry = peek_entry(
-      queue, first_not_last);
-  node_t *node;
+  const node_t *node;
 
   custom_queue_empty(&tmp_queue);
 
@@ -73,7 +72,7 @@ static ret_code_t delete_tree(void)
       LAST_OR_TAIL);
   delete(tree_head);
 
-  while (!custom_queue_is_empty(&tmp_queue))
+  while (!TAILQ_EMPTY(&tmp_queue))
   {
     node = custom_queue_peek(&tmp_queue, HEAD_OR_FIRST);
 
@@ -107,6 +106,8 @@ static ret_code_t delete_tree(void)
   }
 
   return ret_code;
+  */
+  return RET_CODE_OK;
 }
 
 

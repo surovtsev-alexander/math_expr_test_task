@@ -41,7 +41,7 @@ static void print_custom_queue_with_tokens(
   const custom_queue_entry_t *last;
   const token_t              *token;
 
-  if (custom_queue_is_empty(queue))
+  if (TAILQ_EMPTY(queue))
   {
     return;
   }

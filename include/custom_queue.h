@@ -23,9 +23,6 @@ void custom_queue_init(
 void custom_queue_empty(
     custom_queue_t *queue);
 
-bool custom_queue_is_empty(
-    const custom_queue_t *queue);
-
 ret_code_t custom_queue_insert(
     custom_queue_t *queue,
     const void     *token,

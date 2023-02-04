@@ -212,7 +212,7 @@ static ret_code_t unstack_with_greater_priotity_and_stack(
 
   token_priority = token_get_priority(token);
 
-  while (!custom_queue_is_empty(&stack))
+  while (!TAILQ_EMPTY(&stack))
   {
     const token_t *token_from_stack = custom_queue_peek(
         &stack,
@@ -247,7 +247,7 @@ ret_code_t reverse_polish_notation_unstack_all_to_output(void)
 
   while (
       RET_CODE_OK == ret_code &&
-      !custom_queue_is_empty(&stack))
+      !TAILQ_EMPTY(&stack))
   {
     ret_code = unstack_and_push_to_output();
 
