@@ -7,6 +7,9 @@
 static ret_code_t read_next_line_and_print_result(
     FILE *input_stream);
 
+static ret_code_t read_line_and_calculate_polish_notation(
+    FILE *input_stream);
+
 
 ret_code_t math_expr_calculator_read_line_by_line_and_print_results(
     FILE *input_stream)
@@ -34,51 +37,12 @@ ret_code_t math_expr_calculator_read_line_by_line_and_print_results(
 static ret_code_t read_next_line_and_print_result(
     FILE *input_stream)
 {
-  token_t               token;
-  token_id_t            token_id;
-  ret_code_t            ret_code                = RET_CODE_OK;
-  ret_code_t            ret_code_2              = RET_CODE_OK;
-  float                 evaluation_result;
+  ret_code_t ret_code                = RET_CODE_OK;
+  ret_code_t ret_code_2              = RET_CODE_OK;
+  float      evaluation_result;
 
-  reverse_polish_notation_init();
 
-  while (RET_CODE_OK == ret_code)
-  {
-    stream_tokenizer_next_token(input_stream, &token);
-
-    token_id = token.token_id;
-
-    if (TOKEN_ID_EOF == token_id)
-    {
-      ret_code = RET_CODE_EOF;
-      break;
-    }
-
-    if (TOKEN_ID_EOL == token_id)
-    {
-      ret_code = RET_CODE_EOL;
-      break;
-    }
-
-    if (TOKEN_IDS == token_id)
-    {
-      ret_code = RET_CODE_PARSING_INPUT_ERROR;
-      break;
-    }
-
-    ret_code = reverse_polish_notation_push_token(
-        &token);
-
-    if (RET_CODE_IGNORE_TOKEN == ret_code)
-    {
-      ret_code = RET_CODE_OK;
-    }
-
-    if (RET_CODE_OK != ret_code)
-    {
-      break;
-    }
-  }
+  ret_code = read_line_and_calculate_polish_notation(input_stream);
 
   if (!ret_code_is_critical_error(ret_code))
   {
@@ -128,6 +92,51 @@ static ret_code_t read_next_line_and_print_result(
   }
 
   reverse_polish_notation_init();
+
+  return ret_code;
+}
+
+static ret_code_t read_line_and_calculate_polish_notation(
+    FILE *input_stream)
+{
+  token_t    token;
+  token_id_t token_id;
+  ret_code_t ret_code = RET_CODE_OK;
+
+  reverse_polish_notation_init();
+
+  while (RET_CODE_OK == ret_code)
+  {
+    stream_tokenizer_next_token(input_stream, &token);
+
+    token_id = token.token_id;
+
+    if (TOKEN_ID_EOF == token_id)
+    {
+      ret_code = RET_CODE_EOF;
+      break;
+    }
+
+    if (TOKEN_ID_EOL == token_id)
+    {
+      ret_code = RET_CODE_EOL;
+      break;
+    }
+
+    if (TOKEN_IDS == token_id)
+    {
+      ret_code = RET_CODE_PARSING_INPUT_ERROR;
+      break;
+    }
+
+    ret_code = reverse_polish_notation_push_token(
+        &token);
+
+    if (RET_CODE_IGNORE_TOKEN == ret_code)
+    {
+      ret_code = RET_CODE_OK;
+    }
+  }
 
   return ret_code;
 }
