@@ -23,6 +23,7 @@ const static token_t change_sign_token =
   .token_id = TOKEN_ID_CHANGE_SING,
 };
 
+
 static bool             change_number_sign      = false;
 
 enum state_e
@@ -78,8 +79,7 @@ ret_code_t reverse_polish_notation_push_token(const token_t *token)
   {
     ret_code = push_to_output(token);
   }
-  else if (
-      TOKEN_PRIORITY_01 <= token_priority &&
+  else if (TOKEN_PRIORITY_01 <= token_priority &&
       TOKEN_PRIORITY_02 >= token_priority)
   {
     ret_code = unstack_with_greater_priotity_and_stack(token);
