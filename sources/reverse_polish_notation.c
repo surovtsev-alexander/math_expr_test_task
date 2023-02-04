@@ -17,6 +17,12 @@ static ret_code_t state_wait_operation_token_id_checker(const token_id_t token_i
 static custom_queue_t   output_queue            = TAILQ_HEAD_INITIALIZER(output_queue);
 static custom_queue_t   stack                   = TAILQ_HEAD_INITIALIZER(stack);
 
+
+const static token_t change_sign_token =
+{
+  .token_id = TOKEN_ID_CHANGE_SING,
+};
+
 static bool             change_number_sign      = false;
 
 enum state_e
@@ -91,6 +97,13 @@ ret_code_t reverse_polish_notation_push_token(const token_t *token)
     ret_code = RET_CODE_IGNORE_TOKEN;
   }
 
+  if (RET_CODE_OK == ret_code && change_number_sign)
+  {
+    ret_code = push_to_output(
+        &change_sign_token);
+    change_number_sign = false;
+  }
+
   return ret_code;
 }
 
@@ -139,31 +152,13 @@ static ret_code_t state_wait_operation_token_id_checker(token_id_t token_id)
   return RET_CODE_IGNORE_TOKEN;
 }
 
-const static token_t change_sign_token =
-{
-  .token_id = TOKEN_ID_CHANGE_SING,
-};
-
 static ret_code_t push_to_output(
     const token_t *token)
 {
-  ret_code_t ret_code;
-
-  ret_code = custom_queue_helper_insert_token(
+  return custom_queue_helper_insert_token(
         &output_queue,
         token,
         TAIL_OR_LAST);
-
-  if (RET_CODE_OK == ret_code && change_number_sign)
-  {
-    change_number_sign = false;
-    ret_code = custom_queue_helper_insert_token(
-        &output_queue,
-        &change_sign_token,
-        TAIL_OR_LAST);
-  }
-
-  return ret_code;
 }
 
 static ret_code_t stack_token(
