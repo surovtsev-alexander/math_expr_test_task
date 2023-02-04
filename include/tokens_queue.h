@@ -40,6 +40,3 @@ void tokens_queue_pop(
     tokens_queue_t *queue,
     bool            first_not_last);
 
-void tokens_queue_print(
-    const tokens_queue_t *queue);
-

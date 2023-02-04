@@ -130,29 +130,3 @@ void tokens_queue_pop(
   TAILQ_REMOVE(queue, entry, entries);
 }
 
-void tokens_queue_print(
-    const tokens_queue_t *queue)
-{
-  tokens_queue_entry_t       *entry;
-  const tokens_queue_entry_t *last;
-  const token_t              *token;
-
-  if (tokens_queue_is_empty(queue))
-  {
-    return;
-  }
-
-  last = TAILQ_LAST(queue, tailhead);
-  TAILQ_FOREACH(entry, queue, entries)
-  {
-    token = entry->data;
-    token_print(token);
-
-    if (entry != last)
-    {
-      printf(" ");
-    }
-  }
-  puts("");
-}
-
