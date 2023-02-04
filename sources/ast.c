@@ -1,4 +1,4 @@
-#include "abstract_syntax_tree.h"
+#include "ast.h"
 #include "token.h"
 
 #include <stdio.h>

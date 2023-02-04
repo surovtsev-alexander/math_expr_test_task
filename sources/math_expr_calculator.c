@@ -1,7 +1,7 @@
 #include "math_expr_calculator.h"
 #include "stream_tokenizer.h"
 #include "reverse_polish_notation.h"
-#include "abstract_syntax_tree.h"
+#include "ast.h"
 
 
 static ret_code_t read_next_line_and_print_result(
