@@ -178,24 +178,23 @@ static ret_code_t stack_token(
 static ret_code_t unstack_and_push_to_output()
 {
   ret_code_t ret_code = RET_CODE_OK;
-  const token_t *token_from_stack = TAILQ_LAST(&stack, tailhead)->data;
+  const custom_queue_entry_t *entry;
+  const token_t *token_from_stack;
 
-  if (NULL == token_from_stack)
+  if (TAILQ_EMPTY(&stack))
   {
     return RET_CODE_EOF;
   }
+
+  entry = TAILQ_LAST(&stack, tailhead);
+  token_from_stack = entry->data;
 
   ret_code = push_to_output(
       token_from_stack);
 
   if (RET_CODE_OK == ret_code)
   {
-    if (!TAILQ_EMPTY(&stack))
-    {
-      custom_queue_entry_t *entry = TAILQ_LAST(
-          &stack, tailhead);
-      TAILQ_REMOVE(&stack, entry, entries);
-    }
+    TAILQ_REMOVE(&stack, entry, entries);
   }
 
   return ret_code;
