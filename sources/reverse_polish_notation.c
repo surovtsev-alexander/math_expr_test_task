@@ -1,4 +1,5 @@
 #include "reverse_polish_notation.h"
+#include "custom_queue_helpers.h"
 
 #include <stdio.h>
 
@@ -148,19 +149,17 @@ static ret_code_t push_to_output(
 {
   ret_code_t ret_code;
 
-  ret_code = custom_queue_insert(
+  ret_code = custom_queue_helper_insert_token(
         &output_queue,
         token,
-        sizeof(token_t),
         LAST_OR_TAIL);
 
   if (RET_CODE_OK == ret_code && change_number_sign)
   {
     change_number_sign = false;
-    ret_code = custom_queue_insert(
+    ret_code = custom_queue_helper_insert_token(
         &output_queue,
         &change_sign_token,
-        sizeof(token_t),
         LAST_OR_TAIL);
   }
 
@@ -170,10 +169,9 @@ static ret_code_t push_to_output(
 static ret_code_t stack_token(
     const token_t *token)
 {
-  return custom_queue_insert(
+  return custom_queue_helper_insert_token(
       &stack,
       token,
-      sizeof(token_t),
       LAST_OR_TAIL);
 }
 

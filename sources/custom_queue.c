@@ -33,8 +33,7 @@ void custom_queue_empty(
 
 ret_code_t custom_queue_insert(
     custom_queue_t *queue,
-    const void     *data,
-    size_t          data_size,
+    void           *data,
     bool            to_the_head)
 {
   if (NULL == queue || NULL == data)
@@ -49,13 +48,7 @@ ret_code_t custom_queue_insert(
     return RET_CODE_NO_MEMORY;
   }
 
-  new_entry->data = malloc(data_size);
-  if (NULL == new_entry->data)
-  {
-    free(new_entry);
-    return RET_CODE_NO_MEMORY;
-  }
-  memcpy(new_entry->data, data, data_size);
+  new_entry->data = data;
 
   if (HEAD_OR_FIRST == to_the_head)
   {

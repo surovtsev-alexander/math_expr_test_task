@@ -21,7 +21,6 @@ void custom_queue_empty(
 
 ret_code_t custom_queue_insert(
     custom_queue_t *queue,
-    const void     *token,
-    size_t          data_size,
+    void           *token,
     bool            to_the_head);
 
