@@ -24,6 +24,8 @@ static bool  _result_is_defined = false;
 static float _result;
 
 
+#define TRACE_LINE() printf("line: %d\n", __LINE__)
+
 ret_code_t abstract_syntax_tree_init(void)
 {
   ret_code_t ret_code;
@@ -43,11 +45,14 @@ static ast_node_t* create_node_by_range(
   ret_code_t ret_code = RET_CODE_OK;
   custom_queue_t stack = TAILQ_HEAD_INITIALIZER(stack);
   custom_queue_entry_t *curr_entry;
-  ast_node_t *res = NULL;
   int curr_idx;
   bool start_reached;
   bool finish_not_reached;
   token_t *token;
+  token_id_t token_id;
+  ast_node_t *node;
+  ast_node_t *res;
+  bool store_node;
 
   custom_queue_empty(&stack);
 
@@ -63,30 +68,102 @@ static ast_node_t* create_node_by_range(
       break;
     }
 
-    if (start_reached && finish_not_reached)
+    if (start_reached)
     {
+      node = malloc(sizeof(ast_node_t));
+      if (NULL == node)
+      {
+        ret_code = RET_CODE_NO_MEMORY;
+        break;
+      }
+
       token = curr_entry->data;
 
-      if (token_id_is_number_or_x(token->token_id))
+      memcpy(&(node->token), token, sizeof(token_t));
+      node->left = NULL;
+      node->right = NULL;
+
+      store_node = false;
+      token_id = token->token_id;
+      if (token_id_is_number_or_x(token_id))
       {
-        custom_queue_helper_insert_token(
+        store_node = true;
+      }
+      else if (token_id_is_operation(token_id))
+      {
+        ret_code = custom_queue_pop(
             &stack,
-            token,
+            (void **)&(node->left),
+            TAIL_OR_LAST);
+        if (RET_CODE_OK == ret_code)
+        {
+          ret_code = custom_queue_pop(
+              &stack,
+              (void **)&(node->right),
+              TAIL_OR_LAST);
+        }
+      }
+      else if (TOKEN_ID_CHANGE_SING == token_id)
+      {
+        ret_code = custom_queue_pop(
+            &stack,
+            (void **)&(node->left),
             TAIL_OR_LAST);
       }
-      else if (token_id_is_operation(token->token_id))
-      {
 
+      if (RET_CODE_OK == ret_code && store_node)
+      {
+        ret_code = custom_queue_helpers_insert_ast_node(
+            &stack,
+            node,
+            TAIL_OR_LAST);
       }
+    }
+
+    if (RET_CODE_OK != ret_code)
+    {
+      break;
     }
 
     curr_idx++;
     curr_entry = TAILQ_NEXT(curr_entry, entries);
   }
 
+  if (RET_CODE_OK == ret_code && !TAILQ_EMPTY(&stack))
+  {
+    ret_code = custom_queue_pop(
+        &stack,
+        (void **)&res,
+        TAIL_OR_LAST);
+  }
+
+  if (RET_CODE_OK == ret_code)
+  {
+    if (!TAILQ_EMPTY(&stack))
+    {
+      ret_code = RET_CODE_INTERNAL_ERROR_001;
+    }
+
+    if (RET_CODE_OK != ret_code)
+    {
+      delete_tree(res);
+      res = NULL;
+    }
+  }
+
   if (RET_CODE_OK != ret_code)
   {
-    delete_tree(res);
+    while (!TAILQ_EMPTY(&stack))
+    {
+      if (RET_CODE_OK != custom_queue_pop(
+            &stack,
+            (void **)&node,
+            TAIL_OR_LAST))
+      {
+        break;
+      }
+      delete_tree(node);
+    }
   }
 
   custom_queue_empty(&stack);
@@ -108,6 +185,8 @@ ret_code_t abstract_syntax_tree_create(const custom_queue_t *queue)
   {
     return ret_code;
   }
+
+  TRACE_LINE();
 
   equal_token_position = get_token_id_first_position(
       queue,

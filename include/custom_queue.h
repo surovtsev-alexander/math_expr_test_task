@@ -24,3 +24,8 @@ ret_code_t custom_queue_insert(
     void           *token,
     bool            to_the_head);
 
+ret_code_t custom_queue_pop(
+    custom_queue_t  *queue,
+    void           **data,
+    bool             from_the_head);
+

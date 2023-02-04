@@ -62,3 +62,35 @@ ret_code_t custom_queue_insert(
   return RET_CODE_OK;
 }
 
+ret_code_t custom_queue_pop(
+    custom_queue_t  *queue,
+    void           **data,
+    bool             from_the_head)
+{
+  custom_queue_entry_t *entry;
+
+  data[0] = NULL;
+
+  if (NULL == queue || TAILQ_EMPTY(queue))
+  {
+    return RET_CODE_EOF;
+  }
+
+  if (HEAD_OR_FIRST == from_the_head)
+  {
+    entry = TAILQ_FIRST(queue);
+  }
+  else
+  {
+    entry = TAILQ_LAST(queue, tailhead);
+  }
+
+  data[0] = entry->data;
+
+  TAILQ_REMOVE(queue, entry, entries);
+
+  free(entry);
+
+  return RET_CODE_OK;
+}
+
