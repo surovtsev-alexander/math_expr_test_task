@@ -5,7 +5,14 @@
 
 void* custom_memdup(const void *src, size_t size)
 {
-  void *res = malloc(size);
+  void *res;
+
+  if (NULL == src)
+  {
+    return NULL;
+  }
+
+  res = malloc(size);
 
   if (NULL == res)
   {
