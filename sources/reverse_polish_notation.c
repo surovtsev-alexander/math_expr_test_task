@@ -152,7 +152,7 @@ static ret_code_t push_to_output(
   ret_code = custom_queue_helper_insert_token(
         &output_queue,
         token,
-        LAST_OR_TAIL);
+        TAIL_OR_LAST);
 
   if (RET_CODE_OK == ret_code && change_number_sign)
   {
@@ -160,7 +160,7 @@ static ret_code_t push_to_output(
     ret_code = custom_queue_helper_insert_token(
         &output_queue,
         &change_sign_token,
-        LAST_OR_TAIL);
+        TAIL_OR_LAST);
   }
 
   return ret_code;
@@ -172,7 +172,7 @@ static ret_code_t stack_token(
   return custom_queue_helper_insert_token(
       &stack,
       token,
-      LAST_OR_TAIL);
+      TAIL_OR_LAST);
 }
 
 static ret_code_t unstack_and_push_to_output()

@@ -6,7 +6,7 @@
 #include <sys/queue.h>
 
 #define HEAD_OR_FIRST      (true)
-#define LAST_OR_TAIL       (false)
+#define TAIL_OR_LAST       (false)
 
 typedef struct custom_queue_entry_s
 {
