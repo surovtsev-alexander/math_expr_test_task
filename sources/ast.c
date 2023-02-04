@@ -47,7 +47,22 @@ ret_code_t abstract_syntax_tree_evaluate_x(float *result)
 
 static ret_code_t delete_tree(void)
 {
-  //
+  custom_queue_t queue = TAILQ_HEAD_INITIALIZER(queue);
+
+  if (NULL == tree_head)
+  {
+    return RET_CODE_OK;
+  }
+
+  custom_queue_empty(&queue);
+
+
+  while (!TAILQ_EMPTY(&queue))
+  {
+
+  }
+
+
   return RET_CODE_OK;
 }
 
