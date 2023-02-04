@@ -69,11 +69,13 @@ static ret_code_t check_x_and_eaqual_signs_in_queue(const tokens_queue_t *queue)
   int                   x_signs_count = 0;
   int                   equal_signs_count = 0;
   tokens_queue_entry_t *entry;
+  token_t              *token;
   token_id_t            token_id;
 
   TAILQ_FOREACH(entry, queue, entries)
   {
-    token_id = entry->token.token_id;
+    token = entry->data;
+    token_id = token->token_id;
 
     if (TOKEN_ID_X == token_id)
     {

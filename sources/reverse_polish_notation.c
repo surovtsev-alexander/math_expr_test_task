@@ -147,6 +147,7 @@ static ret_code_t push_to_output(
   ret_code = tokens_queue_insert(
         &output_queue,
         token,
+        sizeof(token_t),
         LAST_OR_TAIL);
 
   if (RET_CODE_OK == ret_code && change_number_sign)
@@ -156,6 +157,7 @@ static ret_code_t push_to_output(
     ret_code = tokens_queue_insert(
         &output_queue,
         &change_sign_token,
+        sizeof(token_t),
         LAST_OR_TAIL);
   }
 
@@ -168,6 +170,7 @@ static ret_code_t stack_token(
   return tokens_queue_insert(
       &stack,
       token,
+      sizeof(token_t),
       LAST_OR_TAIL);
 }
 

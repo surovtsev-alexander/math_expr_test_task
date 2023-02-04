@@ -11,8 +11,8 @@
 
 typedef struct tokens_queue_entry_s
 {
-  token_t                               token;
-  TAILQ_ENTRY(tokens_queue_entry_s)     entries;
+  void                              *data;
+  TAILQ_ENTRY(tokens_queue_entry_s)  entries;
 } tokens_queue_entry_t;
 
 typedef TAILQ_HEAD(tailhead, tokens_queue_entry_s) tokens_queue_t;
@@ -28,10 +28,11 @@ bool tokens_queue_is_empty(
 
 ret_code_t tokens_queue_insert(
     tokens_queue_t *queue,
-    const token_t  *token,
+    const void     *token,
+    size_t          data_size,
     bool            to_the_head);
 
-const token_t * tokens_queue_peek(
+const void * tokens_queue_peek(
     tokens_queue_t *queue,
     bool            first_not_last);
 
