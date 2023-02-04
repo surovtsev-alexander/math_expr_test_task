@@ -2,17 +2,29 @@
 
 #include <stdio.h>
 
-static void delete_tree(void);
+typedef struct node_s
+{
+  token_t       *token;
+  struct node_s *left;
+  struct node_s *right;
+} node_t;
+
+node_t *tree_head = NULL;
+
+static ret_code_t delete_tree(void);
 static ret_code_t check_x_and_eaqual_signs_in_queue(const tokens_queue_t *queue);
 
 static bool  _result_is_defined = false;
 static float _result;
 
-void abstract_syntax_tree_init(void)
+ret_code_t abstract_syntax_tree_init(void)
 {
-  delete_tree();
+  ret_code_t ret_code;
+  ret_code = delete_tree();
 
   _result_is_defined = false;
+
+  return ret_code;
 }
 
 ret_code_t abstract_syntax_tree_create(const tokens_queue_t *queue)
@@ -38,8 +50,17 @@ ret_code_t abstract_syntax_tree_evaluate_x(float *result)
   }
 }
 
-static void delete_tree(void)
+static ret_code_t delete_tree(void)
 {
+  tokens_queue_t tmp_queue = TAILQ_HEAD_INITIALIZER(tmp_queue);
+
+  if (NULL == tree_head)
+  {
+    return RET_CODE_OK;
+  }
+
+
+  return RET_CODE_OK;
 }
 
 
