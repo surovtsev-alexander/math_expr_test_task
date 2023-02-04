@@ -65,46 +65,48 @@ static ret_code_t delete_tree(void)
       tree_head,
       TAIL_OR_LAST);
 
-  if (RET_CODE_OK == ret_code)
+  if (RET_CODE_OK != ret_code)
   {
-    free(tree_head);
-    tree_head = NULL;
+    return ret_code;
+  }
 
-    while (!TAILQ_EMPTY(&queue))
+  free(tree_head);
+  tree_head = NULL;
+
+  while (!TAILQ_EMPTY(&queue))
+  {
+    entry = TAILQ_FIRST(&queue);
+    TAILQ_REMOVE(&queue, entry, entries);
+
+    node = entry->data;
+
+    if (NULL != node->left)
     {
-      entry = TAILQ_FIRST(&queue);
-      TAILQ_REMOVE(&queue, entry, entries);
+      ret_code = custom_queue_helpers_insert_ast_node(
+          &queue,
+          node->left,
+          TAIL_OR_LAST);
 
-      node = entry->data;
-
-      if (NULL != node->left)
+      if (RET_CODE_OK != ret_code)
       {
-        ret_code = custom_queue_helpers_insert_ast_node(
-            &queue,
-            node->left,
-            TAIL_OR_LAST);
-
-        if (RET_CODE_OK != ret_code)
-        {
-          break;
-        }
+        break;
       }
-
-      if (NULL != node->right)
-      {
-        ret_code = custom_queue_helpers_insert_ast_node(
-            &queue,
-            node->right,
-            TAIL_OR_LAST);
-        if (RET_CODE_OK != ret_code)
-        {
-          break;
-        }
-      }
-
-      free(node);
-      free(entry);
     }
+
+    if (NULL != node->right)
+    {
+      ret_code = custom_queue_helpers_insert_ast_node(
+          &queue,
+          node->right,
+          TAIL_OR_LAST);
+      if (RET_CODE_OK != ret_code)
+      {
+        break;
+      }
+    }
+
+    free(node);
+    free(entry);
   }
 
   return ret_code;
