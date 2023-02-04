@@ -42,17 +42,17 @@ static ast_node_t* create_node_by_range(
     int start_idx,
     int finish_idx)
 {
-  ret_code_t ret_code = RET_CODE_OK;
-  custom_queue_t stack = TAILQ_HEAD_INITIALIZER(stack);
+  ret_code_t            ret_code = RET_CODE_OK;
+  custom_queue_t        stack = TAILQ_HEAD_INITIALIZER(stack);
   custom_queue_entry_t *curr_entry;
-  int curr_idx;
-  bool start_reached;
-  bool finish_not_reached;
-  token_t *token;
-  token_id_t token_id;
-  ast_node_t *node;
-  ast_node_t *res;
-  bool store_node;
+  int                   curr_idx;
+  bool                  start_reached;
+  bool                  finish_not_reached;
+  token_t              *token;
+  token_id_t            token_id;
+  ast_node_t           *node;
+  ast_node_t           *res;
+  bool                  store_node;
 
   custom_queue_empty(&stack);
 
