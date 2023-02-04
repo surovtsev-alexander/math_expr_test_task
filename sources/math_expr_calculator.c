@@ -34,7 +34,7 @@ ret_code_t math_expr_calculator_read_line_by_line_and_print_results(
   return ret_code;
 }
 
-static void print_custom_queue(
+static void print_custom_queue_with_tokens(
     const custom_queue_t *queue)
 {
   custom_queue_entry_t       *entry;
@@ -80,7 +80,7 @@ static ret_code_t read_next_line_and_print_result(
   
   if (!ret_code_is_critical_error(ret_code))
   {
-    print_custom_queue(
+    print_custom_queue_with_tokens(
         reverse_polish_notation_get_result_queue());
   }
 
