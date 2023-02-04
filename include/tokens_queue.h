@@ -4,45 +4,27 @@
 #include "ret_code.h"
 
 #include <stdbool.h>
+#include <sys/queue.h>
 
 
-typedef struct node_s
+typedef struct tokens_queue_entry_s
 {
-  token_t        token;
-  struct node_s *next;
-} node_t;
+  token_t                               token;
+  TAILQ_ENTRY(tokens_queue_entry_s)     entries;
+} tokens_queue_entry_t;
 
+typedef TAILQ_HEAD(tailhead, tokens_queue_entry_s) tokens_queue_t;
 
-typedef struct tokens_queue_s
-{
-  node_t *head;
-  node_t *tail;
-} tokens_queue_t;
+void tokens_queue_init(
+    tokens_queue_t *queue);
 
+void tokens_queue_empty(
+    tokens_queue_t *queue);
 
-tokens_queue_t* tokens_queue_create();
-ret_code_t tokens_queue_destroy_and_set_null(
-    tokens_queue_t **pointer_to_queue);
+ret_code_t tokens_queue_insert_tail(
+    tokens_queue_t *queue,
+    const token_t  *token);
 
-bool tokens_queue_is_empty(
-    const tokens_queue_t * const queue);
-ret_code_t tokens_queue_empty(
-    tokens_queue_t * const queue);
-
-ret_code_t tokens_queue_push_front(
-    tokens_queue_t * const queue,
-    const token_t token);
-ret_code_t tokens_queue_push_back(
-    tokens_queue_t * const queue,
-    const token_t token);
-
-const token_t* tokens_queue_peek_front(
-    tokens_queue_t * const queue);
-const token_t* tokens_queue_peek_back(
-    tokens_queue_t * const queue);
-
-ret_code_t tokens_queue_pop_front(
-    tokens_queue_t * const queue);
-ret_code_t tokens_queue_pop_back(
-    tokens_queue_t * const queue);
+void tokens_queue_print(
+    tokens_queue_t *queue);
 

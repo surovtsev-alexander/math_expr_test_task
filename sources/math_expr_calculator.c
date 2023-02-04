@@ -2,6 +2,8 @@
 #include "stream_tokenizer.h"
 #include "tokens_queue.h"
 
+#include <sys/queue.h>
+
 
 static ret_code_t read_next_line_and_print_result(
     FILE *input_stream);
@@ -33,25 +35,18 @@ ret_code_t math_expr_calculator_read_line_by_line_and_print_results(
 static ret_code_t read_next_line_and_print_result(
     FILE *input_stream)
 {
-  token_t                token;
-  token_id_t             token_id;
-  ret_code_t             ret_code = RET_CODE_OK;
-  tokens_queue_t        *output_queue;
+  token_t               token;
+  token_id_t            token_id;
+  ret_code_t            ret_code        = RET_CODE_OK;
+  tokens_queue_t        output_queue    = TAILQ_HEAD_INITIALIZER(output_queue);
 
-  output_queue = tokens_queue_create();
-
-  if (NULL == output_queue)
-  {
-    ret_code = RET_CODE_UNINITIALIZED;
-  }
+  tokens_queue_init(&output_queue);
 
   while (RET_CODE_OK == ret_code)
   {
     stream_tokenizer_next_token(input_stream, &token);
 
     token_id = token.token_id;
-
-    token_print(&token);
 
     if (TOKEN_ID_EOF == token_id)
     {
@@ -71,10 +66,14 @@ static ret_code_t read_next_line_and_print_result(
       break;
     }
 
-    tokens_queue_push_back(output_queue, token);
+    tokens_queue_insert_tail(
+        &output_queue,
+        &token);
   }
 
-  tokens_queue_destroy_and_set_null(&output_queue);
+  tokens_queue_print(&output_queue);
+
+  tokens_queue_empty(&output_queue);
 
   return ret_code;
 }
