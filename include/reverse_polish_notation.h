@@ -1,7 +1,7 @@
 #pragma once
 
 #include "token.h"
-#include "tokens_queue.h"
+#include "custom_queue.h"
 
 void reverse_polish_notation_init(void);
 ret_code_t reverse_polish_notation_push_token(const token_t *token);

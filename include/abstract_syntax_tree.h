@@ -1,6 +1,6 @@
 #pragma once
 
-#include "tokens_queue.h"
+#include "custom_queue.h"
 
 ret_code_t abstract_syntax_tree_init(void);
 ret_code_t abstract_syntax_tree_create(const tokens_queue_t *queue);
