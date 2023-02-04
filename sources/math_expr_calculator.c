@@ -42,11 +42,7 @@ static ret_code_t read_next_line_and_print_result(
 
     token_id = token.token_id;
 
-    printf("token_id: %d\n", token_id);
-    if (TOKEN_ID_NUMBER == token_id)
-    {
-      printf("number: %f\n", token.number);
-    }
+    token_print(&token);
 
     if (TOKEN_ID_EOF == token_id)
     {
@@ -58,6 +54,11 @@ static ret_code_t read_next_line_and_print_result(
     {
       ret_code = RET_CODE_EOL;
       break;
+    }
+
+    if (TOKEN_IDS == token_id)
+    {
+      ret_code = RET_CODE_PARSING_INPUT_ERROR;
     }
   }
 

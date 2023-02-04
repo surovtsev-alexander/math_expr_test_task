@@ -28,3 +28,7 @@ typedef struct token_s
   float         number;
 } PACKED token_t;
 
+
+token_id_t      token_get_id_by_symbol(int symbol);
+void            token_print(const token_t *token);
+
