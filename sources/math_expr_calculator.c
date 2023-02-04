@@ -36,6 +36,7 @@ static ret_code_t read_next_line_and_print_result(
   token_t               token;
   token_id_t            token_id;
   ret_code_t            ret_code        = RET_CODE_OK;
+  ret_code_t            ret_code_2      = RET_CODE_OK;
 
   reverse_polish_notation_init();
 
@@ -66,14 +67,31 @@ static ret_code_t read_next_line_and_print_result(
     ret_code = reverse_polish_notation_push_token(
         &token);
 
+    if (RET_CODE_IGNORE_TOKEN == ret_code)
+    {
+      ret_code = RET_CODE_OK;
+    }
+
     if (RET_CODE_OK != ret_code)
     {
       break;
     }
   }
 
-  tokens_queue_print(
-      reverse_polish_notation_get_result_queue());
+  if (!ret_code_is_critical_error(ret_code))
+  {
+    ret_code_2 = reverse_polish_notation_unstack_all_to_output();
+    if (ret_code_is_critical_error(ret_code_2))
+    {
+      ret_code = ret_code_2;
+    }
+  }
+  
+  if (!ret_code_is_critical_error(ret_code))
+  {
+    tokens_queue_print(
+        reverse_polish_notation_get_result_queue());
+  }
 
   reverse_polish_notation_init();
 

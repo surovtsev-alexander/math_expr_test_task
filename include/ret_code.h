@@ -2,6 +2,7 @@
 
 #include "stdint.h"
 
+#include <stdbool.h>
 
 enum ret_code_e
 {
@@ -11,19 +12,11 @@ enum ret_code_e
   RET_CODE_PARSING_INPUT_ERROR,
   RET_CODE_NO_MEMORY,
   RET_CODE_UNINITIALIZED,
-  RET_CODE_INTERNAL_ERROR_001,
-  RET_CODE_INTERNAL_ERROR_002,
-  RET_CODE_INTERNAL_ERROR_003,
-  RET_CODE_INTERNAL_ERROR_004,
-  RET_CODE_INTERNAL_ERROR_005,
-  RET_CODE_INTERNAL_ERROR_006,
-  RET_CODE_INTERNAL_ERROR_007,
-  RET_CODE_INTERNAL_ERROR_008,
-  RET_CODE_INTERNAL_ERROR_009,
-  RET_CODE_INTERNAL_ERROR_010,
-
+  RET_CODE_IGNORE_TOKEN,
   RET_CODES
 };
 
 typedef int32_t ret_code_t;
+
+bool ret_code_is_critical_error(ret_code_t ret_code);
 

@@ -36,12 +36,18 @@ void tokens_queue_empty(
   tokens_queue_init(queue);
 }
 
+bool tokens_queue_is_empty(
+    const tokens_queue_t *queue)
+{
+  return NULL == queue || TAILQ_EMPTY(queue);
+}
+
 ret_code_t tokens_queue_insert(
     tokens_queue_t *queue,
     const token_t  *token,
     bool            to_the_head)
 {
-  if (NULL == queue)
+  if (NULL == queue || NULL == token)
   {
     return RET_CODE_UNINITIALIZED;
   }
@@ -55,7 +61,7 @@ ret_code_t tokens_queue_insert(
 
   memcpy(&(new_entry->token), token, sizeof(token_t));
 
-  if (INSERT_TO_THE_HEAD == to_the_head)
+  if (HEAD_OR_FIRST == to_the_head)
   {
     TAILQ_INSERT_HEAD(queue, new_entry, entries);
   }
@@ -67,28 +73,53 @@ ret_code_t tokens_queue_insert(
   return RET_CODE_OK;
 }
 
-const token_t * tokens_queue_peek(
+static const tokens_queue_entry_t * peek_entry(
     tokens_queue_t *queue,
     bool            first_not_last)
 {
-  const tokens_queue_entry_t *entry;
-
-  if (NULL == queue || TAILQ_EMPTY(queue))
+  if (tokens_queue_is_empty(queue))
   {
     return NULL;
   }
 
-  if (PEEK_FIRST == first_not_last)
+  if (HEAD_OR_FIRST == first_not_last)
   {
-    entry = TAILQ_FIRST(queue);
+    return TAILQ_FIRST(queue);
   }
   else
   {
-    entry = TAILQ_LAST(queue, tailhead);
+    return TAILQ_LAST(queue, tailhead);
   }
-  assert(NULL != entry);
+}
+
+const token_t * tokens_queue_peek(
+    tokens_queue_t *queue,
+    bool            first_not_last)
+{
+  const tokens_queue_entry_t *entry = peek_entry(
+      queue, first_not_last);
+
+  if (NULL == entry)
+  {
+    return NULL;
+  }
 
   return &(entry->token);
+}
+
+void tokens_queue_pop(
+    tokens_queue_t *queue,
+    bool            first_not_last)
+{
+  const tokens_queue_entry_t *entry = peek_entry(
+      queue, first_not_last);
+
+  if (NULL == entry)
+  {
+    return;
+  }
+
+  TAILQ_REMOVE(queue, entry, entries);
 }
 
 void tokens_queue_print(
@@ -97,25 +128,21 @@ void tokens_queue_print(
   tokens_queue_entry_t       *entry;
   const tokens_queue_entry_t *last;
 
-  if (NULL == queue)
+  if (tokens_queue_is_empty(queue))
   {
     return;
   }
 
   last = TAILQ_LAST(queue, tailhead);
-
-  if (!TAILQ_EMPTY(queue))
+  TAILQ_FOREACH(entry, queue, entries)
   {
-    TAILQ_FOREACH(entry, queue, entries)
-    {
-      token_print(&(entry->token));
+    token_print(&(entry->token));
 
-      if (entry != last)
-      {
-        printf(" ");
-      }
+    if (entry != last)
+    {
+      printf(" ");
     }
-    puts("");
   }
+  puts("");
 }
 

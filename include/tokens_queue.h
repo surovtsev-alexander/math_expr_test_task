@@ -6,11 +6,8 @@
 #include <stdbool.h>
 #include <sys/queue.h>
 
-#define INSERT_TO_THE_HEAD (true)
-#define INSERT_TO_THE_TAIL (false)
-
-#define PEEK_FIRST         (true)
-#define PEEK_LAST          (false)
+#define HEAD_OR_FIRST      (true)
+#define LAST_OR_TAIL       (false)
 
 typedef struct tokens_queue_entry_s
 {
@@ -26,12 +23,19 @@ void tokens_queue_init(
 void tokens_queue_empty(
     tokens_queue_t *queue);
 
+bool tokens_queue_is_empty(
+    const tokens_queue_t *queue);
+
 ret_code_t tokens_queue_insert(
     tokens_queue_t *queue,
     const token_t  *token,
     bool            to_the_head);
 
 const token_t * tokens_queue_peek(
+    tokens_queue_t *queue,
+    bool            first_not_last);
+
+void tokens_queue_pop(
     tokens_queue_t *queue,
     bool            first_not_last);
 
