@@ -24,6 +24,10 @@ void stream_tokenizer_next_token(
     symbol = getc(input_stream);
   }
 
+  while (' ' == symbol)
+  {
+    symbol = getc(input_stream);
+  }
 
   token_id = token_get_id_by_symbol(symbol);
 
