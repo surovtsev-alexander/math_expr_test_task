@@ -189,9 +189,12 @@ static ret_code_t unstack_and_push_to_output()
 
   if (RET_CODE_OK == ret_code)
   {
-    custom_queue_pop(
-        &stack,
-        LAST_OR_TAIL);
+    if (!TAILQ_EMPTY(&stack))
+    {
+      custom_queue_entry_t *entry = TAILQ_LAST(
+          &stack, tailhead);
+      TAILQ_REMOVE(&stack, entry, entries);
+    }
   }
 
   return ret_code;

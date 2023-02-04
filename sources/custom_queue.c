@@ -69,37 +69,3 @@ ret_code_t custom_queue_insert(
   return RET_CODE_OK;
 }
 
-static const custom_queue_entry_t * peek_entry(
-    custom_queue_t *queue,
-    bool            first_not_last)
-{
-  if (TAILQ_EMPTY(queue))
-  {
-    return NULL;
-  }
-
-  if (HEAD_OR_FIRST == first_not_last)
-  {
-    return TAILQ_FIRST(queue);
-  }
-  else
-  {
-    return TAILQ_LAST(queue, tailhead);
-  }
-}
-
-void custom_queue_pop(
-    custom_queue_t *queue,
-    bool            first_not_last)
-{
-  const custom_queue_entry_t *entry = peek_entry(
-      queue, first_not_last);
-
-  if (NULL == entry)
-  {
-    return;
-  }
-
-  TAILQ_REMOVE(queue, entry, entries);
-}
-
