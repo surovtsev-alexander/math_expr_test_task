@@ -66,9 +66,10 @@ static ret_code_t read_next_line_and_print_result(
       break;
     }
 
-    tokens_queue_insert_tail(
+    tokens_queue_insert(
         &output_queue,
-        &token);
+        &token,
+        INSERT_TO_THE_TAIL);
   }
 
   tokens_queue_print(&output_queue);

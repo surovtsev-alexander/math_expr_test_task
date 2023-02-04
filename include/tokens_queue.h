@@ -6,6 +6,8 @@
 #include <stdbool.h>
 #include <sys/queue.h>
 
+#define INSERT_TO_THE_HEAD (true)
+#define INSERT_TO_THE_TAIL (false)
 
 typedef struct tokens_queue_entry_s
 {
@@ -21,9 +23,10 @@ void tokens_queue_init(
 void tokens_queue_empty(
     tokens_queue_t *queue);
 
-ret_code_t tokens_queue_insert_tail(
+ret_code_t tokens_queue_insert(
     tokens_queue_t *queue,
-    const token_t  *token);
+    const token_t  *token,
+    bool            to_the_head);
 
 void tokens_queue_print(
     tokens_queue_t *queue);
