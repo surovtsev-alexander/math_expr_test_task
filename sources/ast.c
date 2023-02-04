@@ -1,16 +1,10 @@
 #include "ast.h"
+#include "ast_node.h"
 #include "token.h"
 
 #include <stdio.h>
 
-typedef struct node_s
-{
-  token_t       *token;
-  struct node_s *left;
-  struct node_s *right;
-} node_t;
-
-node_t *tree_head = NULL;
+ast_node_t *tree_head = NULL;
 
 static ret_code_t delete_tree(void);
 static ret_code_t check_x_and_eaqual_signs_in_queue(const custom_queue_t *queue);
