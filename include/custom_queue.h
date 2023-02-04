@@ -26,10 +26,6 @@ ret_code_t custom_queue_insert(
     size_t          data_size,
     bool            to_the_head);
 
-const void * custom_queue_peek(
-    custom_queue_t *queue,
-    bool            first_not_last);
-
 void custom_queue_pop(
     custom_queue_t *queue,
     bool            first_not_last);

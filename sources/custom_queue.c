@@ -88,21 +88,6 @@ static const custom_queue_entry_t * peek_entry(
   }
 }
 
-const void * custom_queue_peek(
-    custom_queue_t *queue,
-    bool            first_not_last)
-{
-  const custom_queue_entry_t *entry = peek_entry(
-      queue, first_not_last);
-
-  if (NULL == entry)
-  {
-    return NULL;
-  }
-
-  return entry->data;
-}
-
 void custom_queue_pop(
     custom_queue_t *queue,
     bool            first_not_last)

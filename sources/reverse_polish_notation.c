@@ -177,9 +177,7 @@ static ret_code_t stack_token(
 static ret_code_t unstack_and_push_to_output()
 {
   ret_code_t ret_code = RET_CODE_OK;
-  const token_t *token_from_stack = custom_queue_peek(
-      &stack,
-      LAST_OR_TAIL);
+  const token_t *token_from_stack = TAILQ_LAST(&stack, tailhead)->data;
 
   if (NULL == token_from_stack)
   {
@@ -214,9 +212,7 @@ static ret_code_t unstack_with_greater_priotity_and_stack(
 
   while (!TAILQ_EMPTY(&stack))
   {
-    const token_t *token_from_stack = custom_queue_peek(
-        &stack,
-        LAST_OR_TAIL);
+    const token_t *token_from_stack = TAILQ_LAST(&stack, tailhead)->data;
 
     if (token_get_priority(token_from_stack) >= token_priority)
     {
