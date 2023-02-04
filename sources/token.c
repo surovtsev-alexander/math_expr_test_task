@@ -48,6 +48,10 @@ static const one_symbol_token_t one_symbol_token_map[] =
     .symbol     = '/',
     .token_id   = TOKEN_ID_DIVIDE,
   },
+  {
+    .symbol     = '-',
+    .token_id   = TOKEN_ID_CHANGE_SING,
+  },
 };
 static const uint8_t one_symbol_token_map_len = ARR_LEN(one_symbol_token_map);
 
@@ -62,6 +66,7 @@ static const token_priority_t token_priorities[] =
   [TOKEN_ID_MINUS]  = TOKEN_PRIORITY_01,
   [TOKEN_ID_TIMES]  = TOKEN_PRIORITY_02,
   [TOKEN_ID_DIVIDE] = TOKEN_PRIORITY_02,
+  [TOKEN_ID_CHANGE_SING] = TOKEN_PRIORITY_IGNORE,
 };
 COMPILE_TIME_ASSERT(TOKEN_IDS == ARR_LEN(token_priorities));
 

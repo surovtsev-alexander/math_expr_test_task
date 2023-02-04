@@ -17,6 +17,7 @@ enum token_id_e
   TOKEN_ID_MINUS,
   TOKEN_ID_TIMES,
   TOKEN_ID_DIVIDE,
+  TOKEN_ID_CHANGE_SING,
 
   TOKEN_IDS
 };
