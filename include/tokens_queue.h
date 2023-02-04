@@ -9,6 +9,9 @@
 #define INSERT_TO_THE_HEAD (true)
 #define INSERT_TO_THE_TAIL (false)
 
+#define PEEK_FIRST         (true)
+#define PEEK_LAST          (false)
+
 typedef struct tokens_queue_entry_s
 {
   token_t                               token;
@@ -27,6 +30,10 @@ ret_code_t tokens_queue_insert(
     tokens_queue_t *queue,
     const token_t  *token,
     bool            to_the_head);
+
+const token_t * tokens_queue_peek(
+    tokens_queue_t *queue,
+    bool            first_not_last);
 
 void tokens_queue_print(
     const tokens_queue_t *queue);

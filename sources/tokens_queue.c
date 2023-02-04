@@ -67,21 +67,53 @@ ret_code_t tokens_queue_insert(
   return RET_CODE_OK;
 }
 
+const token_t * tokens_queue_peek(
+    tokens_queue_t *queue,
+    bool            first_not_last)
+{
+  const tokens_queue_entry_t *entry;
+
+  if (NULL == queue || TAILQ_EMPTY(queue))
+  {
+    return NULL;
+  }
+
+  if (PEEK_FIRST == first_not_last)
+  {
+    entry = TAILQ_FIRST(queue);
+  }
+  else
+  {
+    entry = TAILQ_LAST(queue, tailhead);
+  }
+  assert(NULL != entry);
+
+  return &(entry->token);
+}
+
 void tokens_queue_print(
     const tokens_queue_t *queue)
 {
-  tokens_queue_entry_t *entry;
+  tokens_queue_entry_t       *entry;
+  const tokens_queue_entry_t *last;
 
   if (NULL == queue)
   {
     return;
   }
 
+  last = TAILQ_LAST(queue, tailhead);
+
   if (!TAILQ_EMPTY(queue))
   {
     TAILQ_FOREACH(entry, queue, entries)
     {
       token_print(&(entry->token));
+
+      if (entry != last)
+      {
+        printf(" ");
+      }
     }
     puts("");
   }
