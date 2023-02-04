@@ -135,3 +135,22 @@ token_priority_t token_get_priority(
   return token_priorities[token_id];
 }
 
+bool token_id_is_number_or_x(token_id_t token_id)
+{
+  return TOKEN_ID_NUMBER == token_id ||
+    TOKEN_ID_X == token_id;
+}
+
+bool token_id_is_equal_sign(token_id_t token_id)
+{
+  return TOKEN_ID_EQUAL == token_id;
+}
+
+bool token_id_is_operation(token_id_t token_id)
+{
+  return TOKEN_ID_PLUS == token_id ||
+    TOKEN_ID_MINUS == token_id ||
+    TOKEN_ID_TIMES == token_id ||
+    TOKEN_ID_DIVIDE == token_id;
+}
+
