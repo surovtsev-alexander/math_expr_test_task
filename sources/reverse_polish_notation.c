@@ -9,19 +9,43 @@ static ret_code_t stack_token(
 static ret_code_t unstack_and_push_to_output();
 static ret_code_t unstack_with_greater_priotity_and_stack(
     const token_t *token);
-static ret_code_t check_and_store_token_id(token_id_t token_id);
+
+static ret_code_t state_wait_operand_token_id_checker(const token_id_t token_id);
+static ret_code_t state_wait_operation_token_id_checker(const token_id_t token_id);
 
 static tokens_queue_t   output_queue            = TAILQ_HEAD_INITIALIZER(output_queue);
 static tokens_queue_t   stack                   = TAILQ_HEAD_INITIALIZER(stack);
 
-static token_id_t       prev_token_id           = TOKEN_IDS;
+static bool             change_number_sign      = false;
+
+enum state_e
+{
+  STATE_WAIT_OPERAND,
+  STATE_WAIT_OPERATION,
+
+  STATES
+};
+typedef uint8_t state_t;
+
+static state_t state = STATE_WAIT_OPERAND;
+
+typedef  ret_code_t (* state_token_id_checker_t)(const token_id_t token_id);
+
+const static state_token_id_checker_t state_token_id_checker_map[] =
+{
+  [STATE_WAIT_OPERAND]   = state_wait_operand_token_id_checker,
+  [STATE_WAIT_OPERATION] = state_wait_operation_token_id_checker,
+};
+COMPILE_TIME_ASSERT(STATES == ARR_LEN(state_token_id_checker_map));
+
 
 void reverse_polish_notation_init(void)
 {
   tokens_queue_empty(&output_queue);
   tokens_queue_empty(&stack);
 
-  prev_token_id = TOKEN_IDS;
+  state = STATE_WAIT_OPERAND;
+  change_number_sign = false;
 }
 
 ret_code_t reverse_polish_notation_push_token(const token_t *token)
@@ -34,7 +58,7 @@ ret_code_t reverse_polish_notation_push_token(const token_t *token)
     return RET_CODE_UNINITIALIZED;
   }
 
-  ret_code  = check_and_store_token_id(token->token_id);
+  ret_code = state_token_id_checker_map[state](token->token_id);
 
   if (RET_CODE_OK != ret_code)
   {
@@ -67,6 +91,51 @@ ret_code_t reverse_polish_notation_push_token(const token_t *token)
   }
 
   return ret_code;
+}
+
+static ret_code_t state_wait_operand_token_id_checker(token_id_t token_id)
+{
+  if (TOKEN_ID_PLUS == token_id ||
+      TOKEN_ID_MINUS == token_id)
+  {
+    if (TOKEN_ID_MINUS == token_id)
+    {
+      change_number_sign = !change_number_sign;
+    }
+
+    return RET_CODE_IGNORE_TOKEN;
+  }
+
+  if (token_id_is_equal_sign(token_id) ||
+      token_id_is_operation(token_id))
+  {
+    return RET_CODE_UNEXPECTED_TOKEN;
+  }
+
+  if (token_id_is_number_or_x(token_id))
+  {
+    state = STATE_WAIT_OPERATION;
+    return RET_CODE_OK;
+  }
+
+  return RET_CODE_IGNORE_TOKEN;
+}
+
+static ret_code_t state_wait_operation_token_id_checker(token_id_t token_id)
+{
+  if (token_id_is_operation(token_id) ||
+      token_id_is_equal_sign(token_id))
+  {
+    state = STATE_WAIT_OPERAND;
+    return RET_CODE_OK;
+  }
+
+  if (token_id_is_number_or_x(token_id))
+  {
+    return RET_CODE_UNEXPECTED_TOKEN;
+  }
+
+  return RET_CODE_IGNORE_TOKEN;
 }
 
 static ret_code_t push_to_output(
@@ -177,40 +246,5 @@ ret_code_t reverse_polish_notation_unstack_all_to_output(void)
 const tokens_queue_t* reverse_polish_notation_get_result_queue(void)
 {
   return &output_queue;
-}
-
-static ret_code_t check_and_store_token_id(token_id_t token_id)
-{
-  ret_code_t ret_code = RET_CODE_OK;
-
-  if (!token_id_is_equal_sign(token_id) &&
-      !token_id_is_number_or_x(token_id) &&
-      !token_id_is_operation(token_id))
-  {
-    return RET_CODE_OK;
-  }
-
-  if (TOKEN_IDS == prev_token_id ||
-      token_id_is_equal_sign(prev_token_id) ||
-      token_id_is_operation(prev_token_id))
-  {
-    if (!token_id_is_number_or_x(token_id))
-    {
-      ret_code = RET_CODE_WRONG_TOKENS_SEQUENCE;
-    }
-  }
-  else if (token_id_is_number_or_x(prev_token_id))
-  {
-    if (token_id_is_number_or_x(token_id))
-    {
-      ret_code = RET_CODE_WRONG_TOKENS_SEQUENCE;
-    }
-  }
-
-  if (RET_CODE_OK == ret_code)
-  {
-    prev_token_id = token_id;
-  }
-  return ret_code;
 }
 
