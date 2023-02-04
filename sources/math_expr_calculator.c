@@ -38,14 +38,15 @@ static ret_code_t read_next_line_and_print_result(
 
   while (RET_CODE_OK == ret_code)
   {
-    ret_code = stream_tokenizer_next_token(input_stream, &token);
-
-    if (RET_CODE_OK != ret_code)
-    {
-      break;
-    }
+    stream_tokenizer_next_token(input_stream, &token);
 
     token_id = token.token_id;
+
+    printf("token_id: %d\n", token_id);
+    if (TOKEN_ID_NUMBER == token_id)
+    {
+      printf("number: %f\n", token.number);
+    }
 
     if (TOKEN_ID_EOF == token_id)
     {
