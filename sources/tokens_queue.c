@@ -68,7 +68,7 @@ ret_code_t tokens_queue_insert(
 }
 
 void tokens_queue_print(
-    tokens_queue_t *queue)
+    const tokens_queue_t *queue)
 {
   tokens_queue_entry_t *entry;
 

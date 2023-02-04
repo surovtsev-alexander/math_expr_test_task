@@ -1,8 +1,6 @@
 #include "math_expr_calculator.h"
 #include "stream_tokenizer.h"
-#include "tokens_queue.h"
-
-#include <sys/queue.h>
+#include "reverse_polish_notation.h"
 
 
 static ret_code_t read_next_line_and_print_result(
@@ -38,9 +36,8 @@ static ret_code_t read_next_line_and_print_result(
   token_t               token;
   token_id_t            token_id;
   ret_code_t            ret_code        = RET_CODE_OK;
-  tokens_queue_t        output_queue    = TAILQ_HEAD_INITIALIZER(output_queue);
 
-  tokens_queue_init(&output_queue);
+  reverse_polish_notation_init();
 
   while (RET_CODE_OK == ret_code)
   {
@@ -66,15 +63,19 @@ static ret_code_t read_next_line_and_print_result(
       break;
     }
 
-    tokens_queue_insert(
-        &output_queue,
-        &token,
-        INSERT_TO_THE_TAIL);
+    ret_code = reverse_polish_notation_push_token(
+        &token);
+
+    if (RET_CODE_OK != ret_code)
+    {
+      break;
+    }
   }
 
-  tokens_queue_print(&output_queue);
+  tokens_queue_print(
+      reverse_polish_notation_get_result_queue());
 
-  tokens_queue_empty(&output_queue);
+  reverse_polish_notation_init();
 
   return ret_code;
 }
