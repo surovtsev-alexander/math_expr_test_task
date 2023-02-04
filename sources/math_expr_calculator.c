@@ -59,6 +59,7 @@ static ret_code_t read_next_line_and_print_result(
     if (TOKEN_IDS == token_id)
     {
       ret_code = RET_CODE_PARSING_INPUT_ERROR;
+      break;
     }
   }
 
