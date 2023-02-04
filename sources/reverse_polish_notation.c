@@ -138,11 +138,15 @@ static ret_code_t state_wait_operation_token_id_checker(token_id_t token_id)
   return RET_CODE_IGNORE_TOKEN;
 }
 
+const static token_t change_sign_token =
+{
+  .token_id = TOKEN_ID_CHANGE_SING,
+};
+
 static ret_code_t push_to_output(
     const token_t *token)
 {
   ret_code_t ret_code;
-  token_t    change_sign_token;
 
   ret_code = custom_queue_insert(
         &output_queue,
@@ -153,7 +157,6 @@ static ret_code_t push_to_output(
   if (RET_CODE_OK == ret_code && change_number_sign)
   {
     change_number_sign = false;
-    change_sign_token.token_id = TOKEN_ID_CHANGE_SING;
     ret_code = custom_queue_insert(
         &output_queue,
         &change_sign_token,
