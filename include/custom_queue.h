@@ -1,6 +1,5 @@
 #pragma once
 
-#include "token.h"
 #include "ret_code.h"
 
 #include <stdbool.h>

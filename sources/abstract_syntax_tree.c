@@ -1,4 +1,5 @@
 #include "abstract_syntax_tree.h"
+#include "token.h"
 
 #include <stdio.h>
 
