@@ -41,7 +41,6 @@ static ret_code_t read_next_line_and_print_result(
   ret_code_t ret_code_2              = RET_CODE_OK;
   float      evaluation_result;
 
-
   ret_code = read_line_and_calculate_polish_notation(input_stream);
 
   if (!ret_code_is_critical_error(ret_code))
@@ -61,6 +60,7 @@ static ret_code_t read_next_line_and_print_result(
 
   if (!ret_code_is_critical_error(ret_code))
   {
+    abstract_syntax_tree_init();
     ret_code_2 = abstract_syntax_tree_create(
         reverse_polish_notation_get_result_queue());
 
