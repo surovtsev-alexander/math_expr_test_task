@@ -125,11 +125,9 @@ static ret_code_t state_wait_operand_token_id_checker(token_id_t token_id)
 
       ret_code = push_to_output(
           &change_sign_token);
-
-      return ret_code;
     }
     state = STATE_WAIT_OPERATION;
-    return RET_CODE_OK;
+    return ret_code;
   }
 
   return RET_CODE_IGNORE_TOKEN;
