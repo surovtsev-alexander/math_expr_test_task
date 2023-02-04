@@ -8,12 +8,6 @@
 #include <sys/queue.h>
 
 
-void custom_queue_init(
-    custom_queue_t *queue)
-{
-  TAILQ_INIT(queue);
-}
-
 void custom_queue_empty(
     custom_queue_t *queue)
 {
@@ -34,7 +28,7 @@ void custom_queue_empty(
     curr_entry = next_entry;
   }
 
-  custom_queue_init(queue);
+  TAILQ_INIT(queue);
 }
 
 ret_code_t custom_queue_insert(

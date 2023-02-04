@@ -17,9 +17,6 @@ typedef struct custom_queue_entry_s
 
 typedef TAILQ_HEAD(tailhead, custom_queue_entry_s) custom_queue_t;
 
-void custom_queue_init(
-    custom_queue_t *queue);
-
 void custom_queue_empty(
     custom_queue_t *queue);
 
