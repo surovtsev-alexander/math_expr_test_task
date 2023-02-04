@@ -34,14 +34,14 @@ ret_code_t math_expr_calculator_read_line_by_line_and_print_results(
   return ret_code;
 }
 
-static void print_tokens_queue(
-    const tokens_queue_t *queue)
+static void print_custom_queue(
+    const custom_queue_t *queue)
 {
-  tokens_queue_entry_t       *entry;
-  const tokens_queue_entry_t *last;
+  custom_queue_entry_t       *entry;
+  const custom_queue_entry_t *last;
   const token_t              *token;
 
-  if (tokens_queue_is_empty(queue))
+  if (custom_queue_is_empty(queue))
   {
     return;
   }
@@ -80,7 +80,7 @@ static ret_code_t read_next_line_and_print_result(
   
   if (!ret_code_is_critical_error(ret_code))
   {
-    print_tokens_queue(
+    print_custom_queue(
         reverse_polish_notation_get_result_queue());
   }
 

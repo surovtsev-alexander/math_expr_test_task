@@ -12,7 +12,7 @@ typedef struct node_s
 node_t *tree_head = NULL;
 
 static ret_code_t delete_tree(void);
-static ret_code_t check_x_and_eaqual_signs_in_queue(const tokens_queue_t *queue);
+static ret_code_t check_x_and_eaqual_signs_in_queue(const custom_queue_t *queue);
 
 static bool  _result_is_defined = false;
 static float _result;
@@ -27,7 +27,7 @@ ret_code_t abstract_syntax_tree_init(void)
   return ret_code;
 }
 
-ret_code_t abstract_syntax_tree_create(const tokens_queue_t *queue)
+ret_code_t abstract_syntax_tree_create(const custom_queue_t *queue)
 {
   ret_code_t ret_code = RET_CODE_OK;
 
@@ -52,7 +52,7 @@ ret_code_t abstract_syntax_tree_evaluate_x(float *result)
 
 static ret_code_t delete_tree(void)
 {
-  tokens_queue_t tmp_queue = TAILQ_HEAD_INITIALIZER(tmp_queue);
+  custom_queue_t tmp_queue = TAILQ_HEAD_INITIALIZER(tmp_queue);
 
   if (NULL == tree_head)
   {
@@ -64,11 +64,11 @@ static ret_code_t delete_tree(void)
 }
 
 
-static ret_code_t check_x_and_eaqual_signs_in_queue(const tokens_queue_t *queue)
+static ret_code_t check_x_and_eaqual_signs_in_queue(const custom_queue_t *queue)
 {
   int                   x_signs_count = 0;
   int                   equal_signs_count = 0;
-  tokens_queue_entry_t *entry;
+  custom_queue_entry_t *entry;
   token_t              *token;
   token_id_t            token_id;
 

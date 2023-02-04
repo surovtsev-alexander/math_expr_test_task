@@ -9,34 +9,34 @@
 #define HEAD_OR_FIRST      (true)
 #define LAST_OR_TAIL       (false)
 
-typedef struct tokens_queue_entry_s
+typedef struct custom_queue_entry_s
 {
   void                              *data;
-  TAILQ_ENTRY(tokens_queue_entry_s)  entries;
-} tokens_queue_entry_t;
+  TAILQ_ENTRY(custom_queue_entry_s)  entries;
+} custom_queue_entry_t;
 
-typedef TAILQ_HEAD(tailhead, tokens_queue_entry_s) tokens_queue_t;
+typedef TAILQ_HEAD(tailhead, custom_queue_entry_s) custom_queue_t;
 
-void tokens_queue_init(
-    tokens_queue_t *queue);
+void custom_queue_init(
+    custom_queue_t *queue);
 
-void tokens_queue_empty(
-    tokens_queue_t *queue);
+void custom_queue_empty(
+    custom_queue_t *queue);
 
-bool tokens_queue_is_empty(
-    const tokens_queue_t *queue);
+bool custom_queue_is_empty(
+    const custom_queue_t *queue);
 
-ret_code_t tokens_queue_insert(
-    tokens_queue_t *queue,
+ret_code_t custom_queue_insert(
+    custom_queue_t *queue,
     const void     *token,
     size_t          data_size,
     bool            to_the_head);
 
-const void * tokens_queue_peek(
-    tokens_queue_t *queue,
+const void * custom_queue_peek(
+    custom_queue_t *queue,
     bool            first_not_last);
 
-void tokens_queue_pop(
-    tokens_queue_t *queue,
+void custom_queue_pop(
+    custom_queue_t *queue,
     bool            first_not_last);
 

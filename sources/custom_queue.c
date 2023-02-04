@@ -8,17 +8,17 @@
 #include <sys/queue.h>
 
 
-void tokens_queue_init(
-    tokens_queue_t *queue)
+void custom_queue_init(
+    custom_queue_t *queue)
 {
   TAILQ_INIT(queue);
 }
 
-void tokens_queue_empty(
-    tokens_queue_t *queue)
+void custom_queue_empty(
+    custom_queue_t *queue)
 {
-  tokens_queue_entry_t *curr_entry;
-  tokens_queue_entry_t *next_entry;
+  custom_queue_entry_t *curr_entry;
+  custom_queue_entry_t *next_entry;
 
   if (NULL == queue)
   {
@@ -34,17 +34,17 @@ void tokens_queue_empty(
     curr_entry = next_entry;
   }
 
-  tokens_queue_init(queue);
+  custom_queue_init(queue);
 }
 
-bool tokens_queue_is_empty(
-    const tokens_queue_t *queue)
+bool custom_queue_is_empty(
+    const custom_queue_t *queue)
 {
   return NULL == queue || TAILQ_EMPTY(queue);
 }
 
-ret_code_t tokens_queue_insert(
-    tokens_queue_t *queue,
+ret_code_t custom_queue_insert(
+    custom_queue_t *queue,
     const void     *data,
     size_t          data_size,
     bool            to_the_head)
@@ -54,7 +54,7 @@ ret_code_t tokens_queue_insert(
     return RET_CODE_UNINITIALIZED;
   }
 
-  tokens_queue_entry_t *new_entry = malloc(sizeof(tokens_queue_entry_t));
+  custom_queue_entry_t *new_entry = malloc(sizeof(custom_queue_entry_t));
 
   if (NULL == new_entry)
   {
@@ -81,11 +81,11 @@ ret_code_t tokens_queue_insert(
   return RET_CODE_OK;
 }
 
-static const tokens_queue_entry_t * peek_entry(
-    tokens_queue_t *queue,
+static const custom_queue_entry_t * peek_entry(
+    custom_queue_t *queue,
     bool            first_not_last)
 {
-  if (tokens_queue_is_empty(queue))
+  if (custom_queue_is_empty(queue))
   {
     return NULL;
   }
@@ -100,11 +100,11 @@ static const tokens_queue_entry_t * peek_entry(
   }
 }
 
-const void * tokens_queue_peek(
-    tokens_queue_t *queue,
+const void * custom_queue_peek(
+    custom_queue_t *queue,
     bool            first_not_last)
 {
-  const tokens_queue_entry_t *entry = peek_entry(
+  const custom_queue_entry_t *entry = peek_entry(
       queue, first_not_last);
 
   if (NULL == entry)
@@ -115,11 +115,11 @@ const void * tokens_queue_peek(
   return entry->data;
 }
 
-void tokens_queue_pop(
-    tokens_queue_t *queue,
+void custom_queue_pop(
+    custom_queue_t *queue,
     bool            first_not_last)
 {
-  const tokens_queue_entry_t *entry = peek_entry(
+  const custom_queue_entry_t *entry = peek_entry(
       queue, first_not_last);
 
   if (NULL == entry)
