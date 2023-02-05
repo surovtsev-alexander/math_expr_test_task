@@ -255,3 +255,37 @@ ret_code_t token_id_inverse_right_side_value(
   return RET_CODE_OK;
 }
 
+ret_code_t token_id_fold_operation(
+    token_id_t  token_id,
+    float       second_operand_value,
+    float      *right_side_value)
+{
+  float input_value = right_side_value[0];
+  float output_value;
+
+  if (TOKEN_ID_PLUS == token_id)
+  {
+    output_value = second_operand_value + input_value;
+  }
+  else if (TOKEN_ID_MINUS == token_id)
+  {
+    output_value = second_operand_value - input_value;
+  }
+  else if (TOKEN_ID_TIMES == token_id)
+  {
+    output_value = second_operand_value / input_value;
+  }
+  else if (TOKEN_ID_DIVIDE == token_id)
+  {
+    output_value = second_operand_value * input_value;
+  }
+  else
+  {
+    return RET_CODE_UNEXPECTED_TOKEN;
+  }
+
+  right_side_value[0] = output_value;
+
+  return RET_CODE_OK;
+}
+

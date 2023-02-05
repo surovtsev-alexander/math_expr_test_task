@@ -71,3 +71,8 @@ ret_code_t token_id_inverse_right_side_value(
     token_id_t  token_id,
     float      *right_side_value);
 
+ret_code_t token_id_fold_operation(
+    token_id_t  token_id,
+    float       second_operand_value,
+    float      *right_side_value);
+
