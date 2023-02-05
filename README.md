@@ -1,4 +1,4 @@
-# filter test task
+# math expression test task
 
 ## Table of contents
 - [Usage](#usage)
