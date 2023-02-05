@@ -1,12 +1,15 @@
 #include "ast_evaluator.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 
 ret_code_t ast_evaluator_evaluate(ast_node_t *root)
 {
   ret_code_t             ret_code;
-  token_t               *root_token;
+  token_t               *right_child_token;
   token_t               *left_child_token;
+  ast_node_t            *left_then_left;
+  ast_node_t            *left_then_right;
 
 
   if (NULL == root)
@@ -16,15 +19,25 @@ ret_code_t ast_evaluator_evaluate(ast_node_t *root)
 
   ret_code = RET_CODE_OK;
 
-  root_token = &(root->token);
-
-  if (!token_id_is_number(root->right->token.token_id))
+  if (!token_id_is_equal_sign(root->token.token_id))
   {
     ret_code = RET_CODE_UNEXPECTED_TOKEN;
   }
-  if (!token_id_is_equal_sign(root->token.token_id))
+
+  if (RET_CODE_OK == ret_code)
   {
-    ret_code == RET_CODE_UNEXPECTED_TOKEN;
+    if (NULL == root->right)
+    {
+      ret_code = RET_CODE_UNINITIALIZED;
+    }
+    if (RET_CODE_OK == ret_code)
+    {
+      right_child_token = &(root->right->token);
+      if (!token_id_is_number(right_child_token->token_id))
+      {
+        ret_code = RET_CODE_UNEXPECTED_TOKEN;
+      }
+    }
   }
 
   while (RET_CODE_OK == ret_code)
@@ -36,9 +49,15 @@ ret_code_t ast_evaluator_evaluate(ast_node_t *root)
     }
     else if (token_id_is_change_sign(left_child_token->token_id))
     {
-      ret_code = RET_CODE_UNEXPECTED_TOKEN;
+      left_then_left = root->left->left;
 
-      break;
+      free(root->left);
+
+      root->left = left_then_left;
+
+      right_child_token->number *= -1;
+
+      continue;
     }
 
     ret_code = RET_CODE_UNEXPECTED_TOKEN;
