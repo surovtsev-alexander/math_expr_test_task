@@ -33,7 +33,7 @@ ret_code_t abstract_syntax_tree_create(const custom_queue_t *queue)
   {
     ast_helpers_print_tree(tree_head);
 
-    ret_code = ast_folder_fold(&tree_head);
+    ret_code = ast_folder_fold(tree_head);
   }
 
   if (RET_CODE_OK == ret_code)

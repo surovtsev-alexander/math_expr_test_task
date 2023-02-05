@@ -13,7 +13,7 @@ static ret_code_t push_node(
   uint8_t right_processed);
 
 
-ret_code_t ast_folder_fold(ast_node_t **root)
+ret_code_t ast_folder_fold(ast_node_t *root)
 {
   ret_code_t            ret_code;
   custom_queue_t        stack = TAILQ_HEAD_INITIALIZER(stack);
@@ -36,14 +36,14 @@ ret_code_t ast_folder_fold(ast_node_t **root)
 
   custom_queue_empty(&stack);
 
-  if (NULL == root[0])
+  if (NULL == root)
   {
     return RET_CODE_UNINITIALIZED;
   }
 
   ret_code = push_node(
       &stack,
-      root[0],
+      root,
       false,
       false);
   if (RET_CODE_OK != ret_code)
