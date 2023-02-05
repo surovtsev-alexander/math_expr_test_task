@@ -265,19 +265,19 @@ ret_code_t token_id_fold_operation(
 
   if (TOKEN_ID_PLUS == token_id)
   {
-    output_value = second_operand_value + input_value;
+    output_value = input_value - second_operand_value;
   }
   else if (TOKEN_ID_MINUS == token_id)
   {
-    output_value = second_operand_value - input_value;
+    output_value = input_value + second_operand_value;
   }
   else if (TOKEN_ID_TIMES == token_id)
   {
-    output_value = second_operand_value / input_value;
+    output_value = input_value / second_operand_value;
   }
   else if (TOKEN_ID_DIVIDE == token_id)
   {
-    output_value = second_operand_value * input_value;
+    output_value = input_value * second_operand_value;
   }
   else
   {

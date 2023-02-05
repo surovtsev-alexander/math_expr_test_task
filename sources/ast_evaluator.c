@@ -105,8 +105,6 @@ ret_code_t ast_evaluator_evaluate(ast_node_t *root)
       left_and_right_are_swapped_just_before = false;
     }
 
-
-
     ret_code = RET_CODE_INTERNAL_ERROR_001;
   }
 
