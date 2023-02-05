@@ -164,13 +164,13 @@ static ast_node_t* create_node_by_range(
       {
         ret_code = custom_queue_pop(
             &stack,
-            (void **)&(node->left),
+            (void **)&(node->right),
             TAIL_OR_LAST);
         if (RET_CODE_OK == ret_code)
         {
           ret_code = custom_queue_pop(
               &stack,
-              (void **)&(node->right),
+              (void **)&(node->left),
               TAIL_OR_LAST);
         }
         store_node = true;

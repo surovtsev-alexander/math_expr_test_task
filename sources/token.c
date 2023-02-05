@@ -197,19 +197,19 @@ ret_code_t token_id_calculate_result(
 
   if (TOKEN_ID_PLUS == token_id)
   {
-    output_value = right_value + left_value;
+    output_value = left_value + right_value;
   }
   else if (TOKEN_ID_MINUS == token_id)
   {
-    output_value = right_value - left_value;
+    output_value = left_value - right_value;
   }
   else if (TOKEN_ID_TIMES == token_id)
   {
-    output_value = right_value * left_value;
+    output_value = left_value * right_value;
   }
   else if (TOKEN_ID_DIVIDE == token_id)
   {
-    output_value = right_value / left_value;
+    output_value = left_value / right_value;
   }
   else
   {
