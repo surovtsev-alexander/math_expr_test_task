@@ -1,6 +1,7 @@
 #include "ast.h"
 #include "ast_creator.h"
 #include "ast_eraser.h"
+#include "ast_evaluator.h"
 #include "ast_folder.h"
 #include "custom_queue_helpers.h"
 
@@ -46,6 +47,14 @@ ret_code_t abstract_syntax_tree_create(const custom_queue_t *queue)
 
 ret_code_t abstract_syntax_tree_evaluate_x(float *result)
 {
+  ret_code_t ret_code = ast_evaluator_evaluate(tree_head);
+
+  if (RET_CODE_OK == ret_code)
+  {
+    _result_is_defined = true;
+    result[0] = tree_head->token.number;
+  }
+
   if (_result_is_defined)
   {
     result[0] = _result;

@@ -101,9 +101,13 @@ static ret_code_t read_next_line_and_print_result(
     ret_code_2 = abstract_syntax_tree_evaluate_x(
         &evaluation_result);
 
-    if (RET_CODE_OK == ret_code || ret_code_is_critical_error(ret_code_2))
+    if (RET_CODE_OK == ret_code_2)
     {
       printf("%f\n", evaluation_result);
+    }
+    else if (RET_CODE_RESULT_IS_UNDEFINED == ret_code_2)
+    {
+      puts("result is undefined");
     }
 
     if (ret_code == RET_CODE_OK)
