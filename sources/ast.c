@@ -3,6 +3,7 @@
 #include "ast_helper_delete.h"
 #include "ast_helper_evaluate_x.h"
 #include "ast_helper_fold.h"
+#include "common.h"
 #include "custom_queue_helpers.h"
 
 #include <stdio.h>
@@ -28,15 +29,19 @@ ret_code_t abstract_syntax_tree_create(const custom_queue_t *queue)
 
   if (RET_CODE_OK == ret_code)
   {
+#ifdef DEBUG_TRACE
     ast_helper_print(tree_head);
+#endif // DEBUG_TRACE
 
     ret_code = ast_helper_fold(tree_head);
   }
 
+#ifdef DEBUG_TRACE
   if (RET_CODE_OK == ret_code)
   {
     ast_helper_print(tree_head);
   }
+#endif // DEBUG_TRACE
 
   return ret_code;
 }
@@ -45,8 +50,10 @@ ret_code_t abstract_syntax_tree_evaluate_x(float *result)
 {
   ret_code_t ret_code = ast_helper_evaluate_x(tree_head);
 
+#ifdef DEBUG_TRACE
   puts("after_evaluation");
   ast_helper_print(tree_head);
+#endif
 
   if (RET_CODE_OK == ret_code)
   {
