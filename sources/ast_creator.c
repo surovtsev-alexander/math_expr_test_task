@@ -68,11 +68,11 @@ ret_code_t ast_creator_create(
 
   if (NULL == a || NULL == b)
   {
-    if (NULL == a)
+    if (NULL != a)
     {
       ast_eraser_erase(a);
     }
-    if (NULL == b)
+    if (NULL != b)
     {
       ast_eraser_erase(b);
     }
