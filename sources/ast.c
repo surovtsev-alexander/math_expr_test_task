@@ -3,10 +3,6 @@
 #include "ast_eraser.h"
 #include "custom_queue_helpers.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/queue.h>
 
 ast_node_t *tree_head = NULL;
 
