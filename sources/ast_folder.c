@@ -112,8 +112,8 @@ ret_code_t ast_folder_fold(ast_node_t **root)
       token_id = token->token_id;
 
       if (token_id_is_operation(token_id) &&
-          TOKEN_ID_NUMBER == ast_node->left->token.token_id &&
-          TOKEN_ID_NUMBER == ast_node->right->token.token_id)
+          token_id_is_number(ast_node->left->token.token_id) &&
+          token_id_is_number(ast_node->right->token.token_id))
       {
         ret_code = token_get_number(
             &(ast_node->left->token),
@@ -146,7 +146,7 @@ ret_code_t ast_folder_fold(ast_node_t **root)
         }
       }
       else if (TOKEN_ID_CHANGE_SING == token_id &&
-          TOKEN_ID_NUMBER == ast_node->left->token.token_id)
+          token_id_is_number(ast_node->left->token.token_id))
       {
         ret_code = token_get_number(
             &(ast_node->left->token),

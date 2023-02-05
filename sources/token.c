@@ -172,6 +172,16 @@ ret_code_t token_get_number(
   return RET_CODE_UNINITIALIZED;
 }
 
+bool token_id_is_number(token_id_t token_id)
+{
+  return TOKEN_ID_NUMBER == token_id;
+}
+
+bool token_id_is_change_sign(token_id_t token_id)
+{
+  return TOKEN_ID_CHANGE_SING == token_id;
+}
+
 ret_code_t token_id_calculate_result(
     token_id_t  token_id,
     float       left_value,
