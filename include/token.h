@@ -1,6 +1,7 @@
 #pragma once
 
 #include "common.h"
+#include "ret_code.h"
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -51,4 +52,15 @@ token_priority_t token_get_priority(const token_t *token);
 bool token_id_is_number_or_x(token_id_t token_id);
 bool token_id_is_equal_sign(token_id_t token_id);
 bool token_id_is_operation(token_id_t token_id);
+
+
+ret_code_t token_get_number(
+    const token_t *token,
+    float *res);
+
+ret_code_t token_id_calculate_result(
+    token_id_t  token_id,
+    float       left_value,
+    float       right_value,
+    float      *res);
 

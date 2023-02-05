@@ -159,3 +159,50 @@ bool token_id_is_operation(token_id_t token_id)
     TOKEN_ID_DIVIDE == token_id;
 }
 
+ret_code_t token_get_number(
+    const token_t *token,
+    float *res)
+{
+  if (TOKEN_ID_NUMBER == token->token_id)
+  {
+    res[0] = token->number;
+    return RET_CODE_OK;
+  }
+  
+  return RET_CODE_UNINITIALIZED;
+}
+
+ret_code_t token_id_calculate_result(
+    token_id_t  token_id,
+    float       left_value,
+    float       right_value,
+    float      *res)
+{
+  float x;
+
+  if (TOKEN_ID_PLUS == token_id)
+  {
+    x = left_value + right_value;
+  }
+  else if (TOKEN_ID_MINUS == token_id)
+  {
+    x = left_value - right_value;
+  }
+  else if (TOKEN_ID_TIMES == token_id)
+  {
+    x = left_value * right_value;
+  }
+  else if (TOKEN_ID_DIVIDE == token_id)
+  {
+    x = left_value / right_value;
+  }
+  else
+  {
+    return RET_CODE_UNEXPECTED_TOKEN;
+  }
+
+  res[0] = x;
+
+  return RET_CODE_OK;
+}
+

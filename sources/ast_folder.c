@@ -8,7 +8,7 @@
 
 static ret_code_t push_node(
   custom_queue_t *stack,
-  const ast_node_t *ast_note,
+  ast_node_t *ast_note,
   uint8_t left_processed,
   uint8_t right_processed);
 
@@ -19,13 +19,18 @@ ret_code_t ast_folder_fold(ast_node_t **root)
   custom_queue_t        stack = TAILQ_HEAD_INITIALIZER(stack);
   custom_queue_entry_t *curr_entry;
   ast_folder_node_t    *ast_folder_node;
-  const ast_node_t     *ast_node;
+  ast_node_t           *ast_node;
   bool                  left_processed;
   bool                  right_processed;
   bool                  need_to_process_left;
   bool                  need_to_process_right;
   bool                  pass_to_processing_left;
   bool                  pass_to_processing_right;
+  const token_t        *token;
+  token_id_t            token_id;
+  float                 left_value;
+  float                 right_value;
+  float                 calculated_ast_node_value;
 
   ret_code = RET_CODE_OK;
 
@@ -99,7 +104,64 @@ ret_code_t ast_folder_fold(ast_node_t **root)
           false);
     }
 
-    // folding node
+    if (RET_CODE_OK == ret_code &&
+        !pass_to_processing_left &&
+        !pass_to_processing_right)
+    {
+      token = &(ast_node->token);
+      token_id = token->token_id;
+
+      if (token_id_is_operation(token_id) &&
+          TOKEN_ID_NUMBER == ast_node->left->token.token_id &&
+          TOKEN_ID_NUMBER == ast_node->right->token.token_id)
+      {
+        ret_code = token_get_number(
+            &(ast_node->left->token),
+            &left_value);
+
+        if (RET_CODE_OK == ret_code)
+        {
+          ret_code = token_get_number(
+              &(ast_node->right->token),
+              &right_value);
+        }
+
+        if (RET_CODE_OK == ret_code)
+        {
+          ret_code = token_id_calculate_result(
+              token_id,
+              left_value,
+              right_value,
+              &calculated_ast_node_value);
+        }
+
+        if (RET_CODE_OK == ret_code)
+        {
+          free(ast_node->left);
+          free(ast_node->right);
+          ast_node->token.token_id = TOKEN_ID_NUMBER;
+          ast_node->token.number = calculated_ast_node_value;
+          ast_node->left = NULL;
+          ast_node->right = NULL;
+        }
+      }
+      else if (TOKEN_ID_CHANGE_SING == token_id &&
+          TOKEN_ID_NUMBER == ast_node->left->token.token_id)
+      {
+        ret_code = token_get_number(
+            &(ast_node->left->token),
+            &left_value);
+
+        if (RET_CODE_OK == ret_code)
+        {
+          free(ast_node->left);
+          ast_node->token.token_id = TOKEN_ID_NUMBER;
+          ast_node->token.number = left_value * (-1);
+          ast_node->left = NULL;
+          ast_node->right = NULL;
+        }
+      }
+    }
 
     free(curr_entry);
   }
@@ -111,7 +173,7 @@ ret_code_t ast_folder_fold(ast_node_t **root)
 
 static ret_code_t push_node(
   custom_queue_t *stack,
-  const ast_node_t *ast_node,
+  ast_node_t *ast_node,
   uint8_t left_processed,
   uint8_t right_processed)
 {
