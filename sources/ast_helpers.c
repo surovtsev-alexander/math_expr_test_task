@@ -44,7 +44,7 @@ void ast_helpers_print_tree(ast_node_t *tree_root)
 
       display_node.level = node->level + 1;
 
-      ast_node_to_store = node->ast_node->left;
+      ast_node_to_store = node->ast_node->right;
       if (NULL != ast_node_to_store)
       {
         display_node.ast_node = ast_node_to_store;
@@ -57,7 +57,7 @@ void ast_helpers_print_tree(ast_node_t *tree_root)
     }
     if (RET_CODE_OK == ret_code)
     {
-      ast_node_to_store = node->ast_node->right;
+      ast_node_to_store = node->ast_node->left;
       if (NULL != ast_node_to_store)
       {
         display_node.ast_node = ast_node_to_store;

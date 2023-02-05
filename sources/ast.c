@@ -5,6 +5,7 @@
 #include "ast_folder.h"
 #include "custom_queue_helpers.h"
 
+#include <stdio.h>
 
 ast_node_t *tree_head = NULL;
 
@@ -48,6 +49,9 @@ ret_code_t abstract_syntax_tree_create(const custom_queue_t *queue)
 ret_code_t abstract_syntax_tree_evaluate_x(float *result)
 {
   ret_code_t ret_code = ast_evaluator_evaluate(tree_head);
+
+  puts("after_evaluation");
+  ast_helpers_print_tree(tree_head);
 
   if (RET_CODE_OK == ret_code)
   {

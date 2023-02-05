@@ -193,30 +193,64 @@ ret_code_t token_id_calculate_result(
     float       right_value,
     float      *res)
 {
-  float x;
+  float output_value;
 
   if (TOKEN_ID_PLUS == token_id)
   {
-    x = right_value + left_value;
+    output_value = right_value + left_value;
   }
   else if (TOKEN_ID_MINUS == token_id)
   {
-    x = right_value - left_value;
+    output_value = right_value - left_value;
   }
   else if (TOKEN_ID_TIMES == token_id)
   {
-    x = right_value * left_value;
+    output_value = right_value * left_value;
   }
   else if (TOKEN_ID_DIVIDE == token_id)
   {
-    x = right_value / left_value;
+    output_value = right_value / left_value;
   }
   else
   {
     return RET_CODE_UNEXPECTED_TOKEN;
   }
 
-  res[0] = x;
+  res[0] = output_value;
+
+  return RET_CODE_OK;
+}
+
+
+ret_code_t token_id_inverse_right_side_value(
+    token_id_t  token_id,
+    float      *right_side_value)
+{
+  float input_value = right_side_value[0];
+  float output_value;
+
+  if (TOKEN_ID_PLUS == token_id)
+  {
+    output_value = input_value;
+  }
+  else if (TOKEN_ID_MINUS == token_id)
+  {
+    output_value = input_value * (-1);
+  }
+  else if (TOKEN_ID_TIMES == token_id)
+  {
+    output_value = input_value;
+  }
+  else if (TOKEN_ID_DIVIDE == token_id)
+  {
+    output_value = 1.0 / input_value;
+  }
+  else
+  {
+    return RET_CODE_UNEXPECTED_TOKEN;
+  }
+
+  right_side_value[0] = output_value;
 
   return RET_CODE_OK;
 }

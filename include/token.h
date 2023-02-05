@@ -67,3 +67,7 @@ ret_code_t token_id_calculate_result(
     float       right_value,
     float      *res);
 
+ret_code_t token_id_inverse_right_side_value(
+    token_id_t  token_id,
+    float      *right_side_value);
+
