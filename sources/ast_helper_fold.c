@@ -13,7 +13,7 @@ static ret_code_t push_node(
   uint8_t right_processed);
 
 
-ret_code_t ast_folder_fold(ast_node_t *root)
+ret_code_t ast_helper_fold(ast_node_t *root)
 {
   ret_code_t            ret_code;
   custom_queue_t        stack = TAILQ_HEAD_INITIALIZER(stack);

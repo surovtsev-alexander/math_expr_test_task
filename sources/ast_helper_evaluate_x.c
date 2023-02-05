@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 
-ret_code_t ast_evaluator_evaluate(ast_node_t *root)
+ret_code_t ast_helper_evaluate_x(ast_node_t *root)
 {
   ret_code_t             ret_code;
   token_t               *right_child_token;

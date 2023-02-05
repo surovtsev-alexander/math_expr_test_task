@@ -5,7 +5,7 @@
 #include "custom_queue.h"
 
 
-ret_code_t ast_creator_create(
+ret_code_t ast_helper_create(
     const custom_queue_t *queue,
     ast_node_t **root);
 

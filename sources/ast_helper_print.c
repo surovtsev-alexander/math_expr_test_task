@@ -6,7 +6,7 @@
 
 static void print_node(const ast_display_node_t *node);
 
-void ast_helpers_print_tree(ast_node_t *tree_root)
+void ast_helper_print(ast_node_t *tree_root)
 {
   ret_code_t            ret_code = RET_CODE_OK;
   custom_queue_t        stack = TAILQ_HEAD_INITIALIZER(stack);

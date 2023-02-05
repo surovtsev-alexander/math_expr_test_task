@@ -5,7 +5,8 @@
 #include <stdlib.h>
 #include <sys/queue.h>
 
-ret_code_t ast_eraser_erase(ast_node_t *root_node)
+
+ret_code_t ast_helper_delete(ast_node_t *root_node)
 {
   custom_queue_t        queue = TAILQ_HEAD_INITIALIZER(queue);
   custom_queue_entry_t *entry;

@@ -9,5 +9,5 @@ typedef struct ast_display_node_e
   int         level;
 } ast_display_node_t;
 
-void ast_helpers_print_tree(ast_node_t *tree_root);
+void ast_helper_print(ast_node_t *tree_root);
 

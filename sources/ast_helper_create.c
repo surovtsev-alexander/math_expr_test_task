@@ -23,7 +23,7 @@ static int get_token_id_first_position(
     token_id_t token_id);
 
 
-ret_code_t ast_creator_create(
+ret_code_t ast_helper_create(
     const custom_queue_t *queue,
     ast_node_t **root)
 {
@@ -70,13 +70,13 @@ ret_code_t ast_creator_create(
   {
     if (NULL != a)
     {
-      ast_eraser_erase(a);
+      ast_helper_delete(a);
     }
     if (NULL != b)
     {
-      ast_eraser_erase(b);
+      ast_helper_delete(b);
     }
-    ast_eraser_erase(res);
+    ast_helper_delete(res);
     res = NULL;
     ret_code = RET_CODE_NO_MEMORY;
   }
@@ -212,7 +212,7 @@ static ast_node_t* create_node_by_range(
 
     if (RET_CODE_OK != ret_code)
     {
-      ast_eraser_erase(res);
+      ast_helper_delete(res);
       res = NULL;
     }
   }
@@ -228,7 +228,7 @@ static ast_node_t* create_node_by_range(
       {
         break;
       }
-      ast_eraser_erase(node);
+      ast_helper_delete(node);
     }
   }
 
