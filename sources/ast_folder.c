@@ -51,8 +51,6 @@ ret_code_t ast_folder_fold(ast_node_t **root)
     return ret_code;
   }
 
-  free(*root);
-
   while (!TAILQ_EMPTY(&stack) && RET_CODE_OK == ret_code)
   {
     curr_entry = TAILQ_FIRST(&stack);
