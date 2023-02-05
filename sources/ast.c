@@ -52,7 +52,7 @@ ret_code_t abstract_syntax_tree_evaluate_x(float *result)
   if (RET_CODE_OK == ret_code)
   {
     _result_is_defined = true;
-    result[0] = tree_head->token.number;
+    _result = tree_head->right->token.number;
   }
 
   if (_result_is_defined)

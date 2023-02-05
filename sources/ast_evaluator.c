@@ -1,5 +1,6 @@
 #include "ast_evaluator.h"
 
+#include <stdio.h>
 
 ret_code_t ast_evaluator_evaluate(ast_node_t *root)
 {
@@ -26,7 +27,16 @@ ret_code_t ast_evaluator_evaluate(ast_node_t *root)
     }
     else if (token_id_is_equal_sign(root_token_id))
     {
-      // processing
+      if (token_id_is_x(root->left->token.token_id))
+      {
+        if (!token_id_is_number(root->right->token.token_id))
+        {
+          ret_code = RET_CODE_UNEXPECTED_TOKEN;
+        }
+        break;
+      }
+
+      ret_code = RET_CODE_UNEXPECTED_TOKEN;
       break;
     }
     else

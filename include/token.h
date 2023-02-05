@@ -54,6 +54,7 @@ bool token_id_is_equal_sign(token_id_t token_id);
 bool token_id_is_operation(token_id_t token_id);
 bool token_id_is_number(token_id_t token_id);
 bool token_id_is_change_sign(token_id_t token_id);
+bool token_id_is_x(token_id_t token_id);
 
 
 ret_code_t token_get_number(
