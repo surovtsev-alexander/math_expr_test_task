@@ -1,8 +1,8 @@
 #include "ast.h"
-#include "ast_creator.h"
+#include "ast_helper_create.h"
 #include "ast_helper_delete.h"
-#include "ast_evaluator.h"
-#include "ast_folder.h"
+#include "ast_helper_evaluate_x.h"
+#include "ast_helper_fold.h"
 #include "custom_queue_helpers.h"
 
 #include <stdio.h>

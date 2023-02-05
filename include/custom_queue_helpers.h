@@ -1,10 +1,10 @@
 #pragma once
 
 #include "ast_node.h"
+#include "ast_helper_fold.h"
 #include "ast_helper_print.h"
 #include "custom_queue.h"
 #include "token.h"
-#include "ast_folder.h"
 
 ret_code_t custom_queue_helper_insert_token(
     custom_queue_t *queue,
