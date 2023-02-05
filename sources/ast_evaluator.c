@@ -77,6 +77,7 @@ ret_code_t ast_evaluator_evaluate(ast_node_t *root)
     }
 
     left_then_right = root->left->right;
+    right_child_number = right_child_token->number;
 
     if (token_id_is_number(left_then_left->token.token_id))
     {
@@ -86,7 +87,6 @@ ret_code_t ast_evaluator_evaluate(ast_node_t *root)
         break;
       }
 
-      right_child_number = right_child_token->number;
       ret_code = token_id_inverse_right_side_value(
           left_child_token_id,
           &(right_child_number));
@@ -105,7 +105,27 @@ ret_code_t ast_evaluator_evaluate(ast_node_t *root)
       left_and_right_are_swapped_just_before = false;
     }
 
-    ret_code = RET_CODE_INTERNAL_ERROR_001;
+    if (!token_id_is_number(left_then_right->token.token_id))
+    {
+      ret_code = RET_CODE_UNEXPECTED_TOKEN;
+      break;
+    }
+
+    ret_code = token_id_fold_operation(
+        left_child_token_id,
+        left_then_right->token.number,
+        &right_child_number);
+
+    if (RET_CODE_OK != ret_code)
+    {
+      break;
+    }
+
+    right_child_token->number = right_child_number;
+
+    free(root->left);
+    free(left_then_right);
+    root->left = left_then_left;
   }
 
   return ret_code;
