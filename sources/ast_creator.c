@@ -122,9 +122,10 @@ static ast_node_t* create_node_by_range(
 
   //printf("create_node_by_range: %d %d\n", start_idx, finish_idx);
 
-  curr_idx = 0;
-  curr_entry = TAILQ_FIRST(queue);
-  while (NULL != curr_entry)
+  for (
+      (curr_idx = 0, curr_entry = TAILQ_FIRST(queue));
+      NULL != curr_entry && RET_CODE_OK == ret_code;
+      (curr_idx++, curr_entry = TAILQ_NEXT(curr_entry, entries)))
   {
     start_reached      = curr_idx >= start_idx;
     finish_not_reached = curr_idx < finish_idx || 0 > finish_idx;
@@ -192,14 +193,6 @@ static ast_node_t* create_node_by_range(
             TAIL_OR_LAST);
       }
     }
-
-    if (RET_CODE_OK != ret_code)
-    {
-      break;
-    }
-
-    curr_idx++;
-    curr_entry = TAILQ_NEXT(curr_entry, entries);
   }
 
   if (RET_CODE_OK == ret_code && !TAILQ_EMPTY(&stack))
