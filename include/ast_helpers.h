@@ -5,9 +5,9 @@
 
 typedef struct ast_display_node_e
 {
-  token_t token;
-  int level;
+  ast_node_t *ast_node;
+  int         level;
 } ast_display_node_t;
 
-void print_tree(ast_node_t *tree_root);
+void ast_helpers_print_tree(ast_node_t *tree_root);
 

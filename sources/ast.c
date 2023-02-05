@@ -225,7 +225,7 @@ ret_code_t abstract_syntax_tree_create(const custom_queue_t *queue)
     ret_code = RET_CODE_NO_MEMORY;
   }
 
-  if (RET_CODE_OK != ret_code)
+  if (RET_CODE_OK == ret_code)
   {
     memcpy(&(tree_head->token), &equal_sign_token, sizeof(token_t));
     if (x_token_position < equal_token_position)
@@ -239,6 +239,8 @@ ret_code_t abstract_syntax_tree_create(const custom_queue_t *queue)
       tree_head->right = a;
     }
   }
+
+  ast_helpers_print_tree(tree_head);
 
   return ret_code;
 }

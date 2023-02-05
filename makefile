@@ -17,7 +17,7 @@ OBJECTS 	:=$(patsubst $(SOURCE_DIR)/%.c, 	$(BUILD_DIR)/%.o, 	$(SOURCES))
 
 EXECUTABLE 	:=math_expr.exe
 
-all: clean build_dir executable
+all: build_dir executable
 
 build_dir:
 	mkdir -p $(BUILD_DIR)
