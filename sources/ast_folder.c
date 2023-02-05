@@ -145,7 +145,7 @@ ret_code_t ast_folder_fold(ast_node_t **root)
           ast_node->right = NULL;
         }
       }
-      else if (TOKEN_ID_CHANGE_SING == token_id &&
+      else if (token_id_is_change_sign(token_id) &&
           token_id_is_number(ast_node->left->token.token_id))
       {
         ret_code = token_get_number(
