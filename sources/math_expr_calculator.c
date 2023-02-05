@@ -16,7 +16,7 @@ ret_code_t math_expr_calculator_read_line_by_line_and_print_results(
 {
   ret_code_t    ret_code = RET_CODE_OK;
 
-  while (RET_CODE_OK  == ret_code)
+  while (RET_CODE_OK == ret_code)
   {
     ret_code = read_next_line_and_print_result(input_stream);
 
