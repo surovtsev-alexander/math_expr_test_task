@@ -1,5 +1,5 @@
 #include "ast_creator.h"
-#include "ast_eraser.h"
+#include "ast_helper_delete.h"
 #include "custom_queue_helpers.h"
 
 #include <stdlib.h>

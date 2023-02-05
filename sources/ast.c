@@ -1,6 +1,6 @@
 #include "ast.h"
 #include "ast_creator.h"
-#include "ast_eraser.h"
+#include "ast_helper_delete.h"
 #include "ast_evaluator.h"
 #include "ast_folder.h"
 #include "custom_queue_helpers.h"
