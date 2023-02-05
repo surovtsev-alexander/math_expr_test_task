@@ -56,6 +56,8 @@ static ast_node_t* create_node_by_range(
 
   custom_queue_empty(&stack);
 
+  //printf("create_node_by_range: %d %d\n", start_idx, finish_idx);
+
   curr_idx = 0;
   curr_entry = TAILQ_FIRST(queue);
   while (NULL != curr_entry)
@@ -78,6 +80,10 @@ static ast_node_t* create_node_by_range(
       }
 
       token = curr_entry->data;
+
+      //printf("queue token:");
+      //token_print(token);
+      //printf("\n");
 
       memcpy(&(node->token), token, sizeof(token_t));
       node->left = NULL;
@@ -102,6 +108,7 @@ static ast_node_t* create_node_by_range(
               (void **)&(node->right),
               TAIL_OR_LAST);
         }
+        store_node = true;
       }
       else if (TOKEN_ID_CHANGE_SING == token_id)
       {
@@ -109,10 +116,12 @@ static ast_node_t* create_node_by_range(
             &stack,
             (void **)&(node->left),
             TAIL_OR_LAST);
+        store_node = true;
       }
 
       if (RET_CODE_OK == ret_code && store_node)
       {
+        //ast_helpers_print_tree(node);
         ret_code = custom_queue_helpers_insert_ast_node(
             &stack,
             node,

@@ -85,10 +85,10 @@ static void print_node(const ast_display_node_t *display_node)
 
   while (level > 0)
   {
-    printf("|");
+    printf("|  ");
     level--;
   }
-  printf(":");
+  printf("[");
   token_print(&(display_node->ast_node->token));
   puts("");
 }
