@@ -47,10 +47,11 @@ ret_code_t ast_evaluator_evaluate(ast_node_t *root)
     {
       break;
     }
-    else if (token_id_is_change_sign(left_child_token->token_id))
-    {
-      left_then_left = root->left->left;
+    
+    left_then_left = root->left->left;
 
+    if (token_id_is_change_sign(left_child_token->token_id))
+    {
       free(root->left);
 
       root->left = left_then_left;
@@ -65,3 +66,4 @@ ret_code_t ast_evaluator_evaluate(ast_node_t *root)
 
   return ret_code;
 }
+
