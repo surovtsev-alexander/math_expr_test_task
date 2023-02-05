@@ -3,6 +3,9 @@
 #include "custom_queue_helpers.h"
 
 
+#include <stdlib.h>
+
+
 ret_code_t ast_folder_fold(ast_node_t **root)
 {
   ret_code_t            ret_code;
@@ -13,13 +16,27 @@ ret_code_t ast_folder_fold(ast_node_t **root)
 
   custom_queue_empty(&stack);
 
+  if (NULL == root[0])
+  {
+    return RET_CODE_UNINITIALIZED;
+  }
+
   ret_code = custom_queue_helpers_insert_ast_node(
       &stack,
       *root,
       HEAD_OR_FIRST);
-
-  while (NULL != (curr_entry = TAILQ_FIRST(&stack)))
+  if (RET_CODE_OK != ret_code)
   {
+    return ret_code;
+  }
+
+  free(*root);
+
+  while (!TAILQ_EMPTY(&stack))
+  {
+    curr_entry = TAILQ_FIRST(&stack);
+    TAILQ_REMOVE(&stack, curr_entry, entries);
+
 
   }
 

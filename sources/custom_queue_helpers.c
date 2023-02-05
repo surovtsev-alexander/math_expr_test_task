@@ -45,6 +45,18 @@ ret_code_t custom_queue_helper_insert_ast_display_node(
       head_not_tail);
 }
 
+ret_code_t custom_queue_helper_insert_ast_folder_node(
+    custom_queue_t    *queue,
+    ast_folder_node_t *ast_folder_node,
+    bool               head_not_tail)
+{
+  return insert_to_custom_queue_helper(
+      queue,
+      ast_folder_node,
+      sizeof(ast_folder_node_t),
+      head_not_tail);
+}
+
 
 static ret_code_t insert_to_custom_queue_helper(
     custom_queue_t *queue,
