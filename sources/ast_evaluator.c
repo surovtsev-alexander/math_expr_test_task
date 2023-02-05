@@ -23,28 +23,23 @@ ret_code_t ast_evaluator_evaluate(ast_node_t *root)
     return RET_CODE_UNINITIALIZED;
   }
 
-  ret_code = RET_CODE_OK;
-
   if (!token_id_is_equal_sign(root->token.token_id))
   {
-    ret_code = RET_CODE_UNEXPECTED_TOKEN;
+    return RET_CODE_UNEXPECTED_TOKEN;
   }
 
-  if (RET_CODE_OK == ret_code)
+  if (NULL == root->right)
   {
-    if (NULL == root->right)
-    {
-      ret_code = RET_CODE_UNINITIALIZED;
-    }
-    if (RET_CODE_OK == ret_code)
-    {
-      right_child_token = &(root->right->token);
-      if (!token_id_is_number(right_child_token->token_id))
-      {
-        ret_code = RET_CODE_UNEXPECTED_TOKEN;
-      }
-    }
+    return RET_CODE_UNINITIALIZED;
   }
+
+  right_child_token = &(root->right->token);
+  if (!token_id_is_number(right_child_token->token_id))
+  {
+    return RET_CODE_UNEXPECTED_TOKEN;
+  }
+
+  ret_code = RET_CODE_OK;
 
   left_and_right_are_swapped_just_before = false;
   while (RET_CODE_OK == ret_code)
