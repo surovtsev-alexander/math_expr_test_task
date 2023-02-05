@@ -22,11 +22,13 @@ Rebuild project with commented `#undef DEBUG_TRACE` in `include/common.h` to mak
 
 Enter: `5*x-7.3=-12*6`
 
-1) reverse polish notation calculation
+1) sequence of tokens generation
+
+2) reverse polish notation calculation
 
 `5.000000 x * 7.300000 - = 12.000000 - 6.000000 *`
 
-2) building abstract syntax tree
+3) building abstract syntax tree
 
 ```
 ===================
@@ -43,7 +45,7 @@ Enter: `5*x-7.3=-12*6`
 \==================
 ```
 
-3) folding tree
+4) folding tree
 
 ```
 ===================
@@ -58,7 +60,7 @@ Enter: `5*x-7.3=-12*6`
 
 ```
 
-4) `x` evaluation
+5) `x` evaluation
 
 ```
 ===================
