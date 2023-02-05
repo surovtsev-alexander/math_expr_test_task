@@ -15,7 +15,7 @@ Type `make` to build project.
 ---
 ## Features
 
-Rebuild project with commented `#undef DEBUG_TRACE` in `include/common.h` to make program print stages of expression evaluation process.
+Rebuild project with commented `#undef DEBUG_TRACE` in `include/common.h` to make program prints stages of expression evaluation process.
 
 ---
 ## Algorithm
@@ -28,7 +28,7 @@ Enter: `5*x-7.3=-12*6`
 
 2) building abstract syntax tree
 
-`
+```
 ===================
 [=
 |  [-
@@ -41,11 +41,11 @@ Enter: `5*x-7.3=-12*6`
 |  |  |  [12.000000
 |  |  [6.000000
 \==================
-`
+```
 
 3) folding tree
 
-`
+```
 ===================
 [=
 |  [-
@@ -56,17 +56,17 @@ Enter: `5*x-7.3=-12*6`
 |  [-72.000000
 \==================
 
-`
+```
 
 4) `x` evaluation
 
-`
+```
 ===================
 [=
 |  [x
 |  [-12.940000
 \==================
-`
+```
 
 ---
 ## Environment
