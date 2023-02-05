@@ -187,7 +187,7 @@ static ast_node_t* create_node_by_range(
       if (RET_CODE_OK == ret_code && store_node)
       {
         //ast_helpers_print_tree(node);
-        ret_code = custom_queue_helpers_insert_ast_node(
+        ret_code = custom_queue_helper_insert_ast_node(
             &stack,
             node,
             TAIL_OR_LAST);

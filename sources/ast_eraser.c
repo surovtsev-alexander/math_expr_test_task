@@ -19,7 +19,7 @@ ret_code_t ast_eraser_erase(ast_node_t *root_node)
 
   custom_queue_empty(&queue);
 
-  ret_code = custom_queue_helpers_insert_ast_node(
+  ret_code = custom_queue_helper_insert_ast_node(
       &queue,
       root_node,
       TAIL_OR_LAST);
@@ -40,7 +40,7 @@ ret_code_t ast_eraser_erase(ast_node_t *root_node)
 
     if (NULL != node->left)
     {
-      ret_code = custom_queue_helpers_insert_ast_node(
+      ret_code = custom_queue_helper_insert_ast_node(
           &queue,
           node->left,
           TAIL_OR_LAST);
@@ -48,7 +48,7 @@ ret_code_t ast_eraser_erase(ast_node_t *root_node)
 
     if (RET_CODE_OK == ret_code && NULL != node->right)
     {
-      ret_code = custom_queue_helpers_insert_ast_node(
+      ret_code = custom_queue_helper_insert_ast_node(
           &queue,
           node->right,
           TAIL_OR_LAST);
