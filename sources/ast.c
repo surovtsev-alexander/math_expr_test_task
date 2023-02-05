@@ -377,9 +377,11 @@ static ret_code_t check_x_and_eaqual_signs_in_queue(const custom_queue_t *queue)
     }
   }
 
+  /*
   printf("x_count: %d\n=_count: %d\n",
       x_signs_count,
       equal_signs_count);
+  */
 
   if (
       x_signs_count == 1 &&
