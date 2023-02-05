@@ -7,7 +7,7 @@
 
 typedef struct ast_folder_node_e
 {
-  ast_node_t *ast_node;
+  const ast_node_t *ast_node;
   uint8_t     left_processed;
   uint8_t     right_processed;
 } ast_folder_node_t;

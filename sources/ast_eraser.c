@@ -31,7 +31,7 @@ ret_code_t ast_eraser_erase(ast_node_t *root_node)
 
   free(root_node);
 
-  while (!TAILQ_EMPTY(&queue))
+  while (!TAILQ_EMPTY(&queue) && RET_CODE_OK == ret_code)
   {
     entry = TAILQ_FIRST(&queue);
     TAILQ_REMOVE(&queue, entry, entries);
@@ -44,23 +44,14 @@ ret_code_t ast_eraser_erase(ast_node_t *root_node)
           &queue,
           node->left,
           TAIL_OR_LAST);
-
-      if (RET_CODE_OK != ret_code)
-      {
-        break;
-      }
     }
 
-    if (NULL != node->right)
+    if (RET_CODE_OK == ret_code && NULL != node->right)
     {
       ret_code = custom_queue_helpers_insert_ast_node(
           &queue,
           node->right,
           TAIL_OR_LAST);
-      if (RET_CODE_OK != ret_code)
-      {
-        break;
-      }
     }
 
     free(node);
