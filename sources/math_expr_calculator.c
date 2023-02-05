@@ -2,6 +2,7 @@
 #include "stream_tokenizer.h"
 #include "reverse_polish_notation.h"
 #include "ast.h"
+#include "common.h"
 
 
 static ret_code_t read_next_line_and_print_result(
@@ -34,6 +35,8 @@ ret_code_t math_expr_calculator_read_line_by_line_and_print_results(
   return ret_code;
 }
 
+
+#ifdef DEBUG_TRACE
 static void print_custom_queue_with_tokens(
     const custom_queue_t *queue)
 {
@@ -59,6 +62,7 @@ static void print_custom_queue_with_tokens(
   }
   puts("");
 }
+#endif // DEBUG_TRACE
 
 static ret_code_t read_next_line_and_print_result(
     FILE *input_stream)
@@ -78,11 +82,13 @@ static ret_code_t read_next_line_and_print_result(
     }
   }
   
+#ifdef DEBUG_TRACE
   if (!ret_code_is_critical_error(ret_code))
   {
     print_custom_queue_with_tokens(
         reverse_polish_notation_get_result_queue());
   }
+#endif // DEBUG_TRACE
 
   if (!ret_code_is_critical_error(ret_code))
   {
