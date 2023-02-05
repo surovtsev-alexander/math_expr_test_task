@@ -273,8 +273,7 @@ static ret_code_t check_x_and_eaqual_signs_in_queue(const custom_queue_t *queue)
       equal_signs_count);
   */
 
-  if (
-      x_signs_count == 1 &&
+  if (x_signs_count     == 1 &&
       equal_signs_count == 1)
   {
     return RET_CODE_OK;
